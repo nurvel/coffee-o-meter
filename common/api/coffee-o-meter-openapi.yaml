@@ -1,0 +1,61 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Coffee-o-meter API
+  license:
+    name: MIT
+#servers:
+#  - url: http://api.example.com/v1
+#    description: Optional server description, e.g. Main (production) server
+#  - url: http://staging-api.example.com
+#    description: Optional server description, e.g. Internal staging server for testing
+paths:
+  /v1/brews:
+    get:
+      summary: Returns all coffee brews
+      description: Returns information of all the coffee made in history.
+      operationId: "getBrews"
+      responses:
+        200:
+          description: A JSON array of all coffee brews.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Brews"
+    post:
+      summary: Create a new brew
+      description: Saves a new brew entry to database
+      operationId: "postBrews"
+      responses:
+        201:
+          description: Created a new brew record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Brew"
+components:
+  schemas:
+    Brew:
+      type: object
+      required:
+        - id
+        - dateTime
+        - potSize
+      properties:
+        id:
+          type: integer
+          format: int64
+        dateTime:
+          type: string
+          format: date-time
+        potSize:
+          $ref: "#/components/schemas/PotSize"
+    Brews:
+      type: array
+      items:
+        $ref: "#/components/schemas/Brew"
+    PotSize:
+      type: string
+      enum: ["FULL", "HALF"]
