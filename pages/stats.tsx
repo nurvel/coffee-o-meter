@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
-import { Container, Text, Row, Col } from "@nextui-org/react";
 
 interface Props {
   stats: String[];
@@ -9,14 +8,13 @@ interface Props {
 const Stats: NextPage<Props> = ({ stats }: Props) => {
   const statsList = stats.map((stat) => <li key={stat.toString()}>{stat}</li>);
 
-
   return (
-    <Container>
+    <div>
       <main className={styles.main}>
-        <Text>Statistics</Text>
+        <p>Statistics</p>
         <ul>{statsList}</ul>
       </main>
-    </Container>
+    </div>
   );
 };
 

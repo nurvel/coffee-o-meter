@@ -1,11 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { Container, Text, Row, Col } from "@nextui-org/react";
 
 const Home: NextPage = () => {
   return (
-    <Container>
+    <div>
       <Head>
         <title>Coffee-o-meter</title>
         <meta
@@ -15,9 +14,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Text>Coffee-o-meter</Text>
+        <p>Coffee-o-meter</p>
       </main>
-    </Container>
+    </div>
   );
 };
 

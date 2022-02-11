@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
-import { Container, Button, Text, Radio, Row, Col } from "@nextui-org/react";
 
 interface Props {
   location: String;
@@ -16,27 +15,23 @@ const MakeCoffee: NextPage<Props> = ({ location, onClickNewPot }: Props) => {
   };
 
   return (
-    <Container>
+    <div>
       <main className={styles.main}>
-        <Radio.Group row onChange={(e) => setPotSize(e.toString())}>
-          <Radio value="half">Half Pot</Radio>
-          <Radio value="full">Full Pot</Radio>
-        </Radio.Group>
         {/* <select name="cars" id="cars">
           <option value="volvo">Volvo</option>
           <option value="saab">Saab</option>
           <option value="mercedes">Mercedes</option>
           <option value="audi">Audi</option>
         </select> */}
-        <Button
+        <button
           onClick={() => {
             handleClick();
           }}
         >
           I made Coffee
-        </Button>
+        </button>
       </main>
-    </Container>
+    </div>
   );
 };
 

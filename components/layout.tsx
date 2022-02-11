@@ -1,5 +1,4 @@
 import styles from "../styles/Home.module.css";
-import { Text } from "@nextui-org/react";
 import Navigation from "./navigation";
 
 type Props = {
@@ -13,7 +12,7 @@ export default function Layout({ children }: Props) {
         <Navigation />
         {children}
         <footer className={styles.footer}>
-          <Text>Footer Here</Text>
+          <p>Footer Here</p>
         </footer>
       </main>
     </>
