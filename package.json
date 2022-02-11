@@ -9,6 +9,7 @@
     "generate": "openapi --input ./common/api/coffee-o-meter-openapi.yaml --output common/api/generated --name BrewService"
   },
   "dependencies": {
+    "@mantine/next": "^3.6.7",
     "next": "12.0.10",
     "react": "17.0.2",
     "react-dom": "17.0.2"
