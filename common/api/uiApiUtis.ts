@@ -4,16 +4,27 @@ const client = new BrewService().default;
 
 export const getBrews = async (): Promise<Brews | ApiError> => {
   return client
-    .getBrews()
+    .findAllBrews()
     .then((brews: Brews) => {
       return brews;
     })
     .catch((err: ApiError) => err);
 };
 
-export const createBrew = async (brew: Brew): Promise<Brew | ApiError> => {
+export const getLatestBrews = async (): Promise<Brew | ApiError> => {
   return client
-    .postBrews(brew)
+    .findLatestBrew()
+    .then((brew: Brew) => {
+      return brew;
+    })
+    .catch((err: ApiError) => err);
+};
+
+export const createBrew = async (
+  brew: Partial<Brew>
+): Promise<Brew | ApiError> => {
+  return client
+    .addBrew(brew as Brew)
     .then((brews: Brew) => {
       return brews;
     })

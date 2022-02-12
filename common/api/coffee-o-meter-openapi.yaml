@@ -9,12 +9,18 @@ info:
 #    description: Optional server description, e.g. Main (production) server
 #  - url: http://staging-api.example.com
 #    description: Optional server description, e.g. Internal staging server for testing
+# findBy = GET
+# add = INSERT
+# create = ??
+# set = UPDATE
+# remove = DELETE
+# is = CHECKING STATUS
 paths:
   /v1/brews:
     get:
       summary: Returns all coffee brews
       description: Returns information of all the coffee made in history.
-      operationId: "getBrews"
+      operationId: "findAllBrews"
       responses:
         200:
           description: A JSON array of all coffee brews.
@@ -25,7 +31,7 @@ paths:
     post:
       summary: Create a new brew
       description: Saves a new brew entry to database
-      operationId: "postBrews"
+      operationId: "addBrew"
       responses:
         201:
           description: Created a new brew record
@@ -35,6 +41,18 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/Brew"
+  /v1/brews/last:
+    get:
+      summary: Returns latest brew
+      description: Returns information of the latest brew.
+      operationId: "findLatestBrew"
+      responses:
+        200:
+          description: A JSON array of all coffee brews.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Brew"
 components:
   schemas:
     Brew:
