@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import { useState } from "react";
-import styles from "../styles/Home.module.css";
 
 interface Props {
   location: String;
@@ -16,7 +15,7 @@ const MakeCoffee: NextPage<Props> = ({ location, onClickNewPot }: Props) => {
 
   return (
     <div>
-      <main className={styles.main}>
+      <main>
         {/* <select name="cars" id="cars">
           <option value="volvo">Volvo</option>
           <option value="saab">Saab</option>

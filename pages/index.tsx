@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
+import { Button, Paper, Text, Container, Title } from "@mantine/core";
 
 const Home: NextPage = () => {
   return (
-    <div>
+    <Container>
       <Head>
         <title>Coffee-o-meter</title>
         <meta
@@ -13,10 +13,27 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <p>Coffee-o-meter</p>
+      <main>
+        <Paper padding="md" shadow="xs">
+          <Container>
+            <Title>Coffee-o-meter</Title>
+            <Text>Paper is the most basic ui component</Text>
+            <Text>
+              Use it to create cards, dropdowns, modals and other components
+              that require background with shadow
+            </Text>
+          </Container>
+          <Button
+            className="my-button"
+            style={{ backgroundColor: "#000" }}
+            mx={20}
+            size="xl"
+          >
+            I made coffee
+          </Button>
+        </Paper>
       </main>
-    </div>
+    </Container>
   );
 };
 

@@ -1,4 +1,3 @@
-import styles from "../styles/Home.module.css";
 import Navigation from "./navigation";
 
 type Props = {
@@ -11,7 +10,7 @@ export default function Layout({ children }: Props) {
       <main>
         <Navigation />
         {children}
-        <footer className={styles.footer}>
+        <footer>
           <p>Footer Here</p>
         </footer>
       </main>
