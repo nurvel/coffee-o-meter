@@ -4,9 +4,9 @@ info:
   title: Coffee-o-meter API
   license:
     name: MIT
-#servers:
-#  - url: http://api.example.com/v1
-#    description: Optional server description, e.g. Main (production) server
+servers:
+  - url: http://localhost:3000/api
+    description: Optional server description, e.g. Main (production) server
 #  - url: http://staging-api.example.com
 #    description: Optional server description, e.g. Internal staging server for testing
 # findBy = GET
@@ -35,12 +35,12 @@ paths:
       responses:
         201:
           description: Created a new brew record
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Brew"
+      # requestBody:
+      #   required: true
+      #   content:
+      #     application/json:
+      #       schema:
+      #         $ref: "#/components/schemas/Brew"
   /v1/brews/last:
     get:
       summary: Returns latest brew
@@ -60,7 +60,6 @@ components:
       required:
         - id
         - dateTime
-        - potSize
       properties:
         id:
           type: integer
@@ -68,6 +67,7 @@ components:
         dateTime:
           type: string
           format: date-time
+          example: "2021-01-30T08:30:00Z"
         potSize:
           $ref: "#/components/schemas/PotSize"
     Brews:

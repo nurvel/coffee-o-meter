@@ -21,10 +21,9 @@ export const getLatestBrews = async (): Promise<Brew | ApiError> => {
 };
 
 export const createBrew = async (
-  brew: Partial<Brew>
 ): Promise<Brew | ApiError> => {
   return client
-    .addBrew(brew as Brew)
+    .addBrew()
     .then((brews: Brew) => {
       return brews;
     })
