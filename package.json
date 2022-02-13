@@ -6,7 +6,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate": "openapi --input ./common/api/coffee-o-meter-openapi.yaml --output common/api/generated --name BrewService"
+    "generate": "openapi --input ./common/api/coffee-o-meter-openapi.yaml --output common/api/generated --name BrewService",
+    "dev:db:init": "docker run --name db-local-coffee-o-meter -p 5432:5432 -e POSTGRES_PASSWORD=mypassword -e POSTGRES_USER=postgres -d postgres",
+    "dev:db:run": "docker start db-local-coffee-o-meter",
+    "migrate-db": "npx prisma migrate dev",
+    "prisma-studio": "npx prisma studio"
   },
   "dependencies": {
     "@mantine/core": "^3.6.7",
