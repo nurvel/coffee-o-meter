@@ -24,8 +24,8 @@ export const createBrew = async (
 ): Promise<Brew | ApiError> => {
   return client
     .addBrew()
-    .then((brews: Brew) => {
-      return brews;
+    .then((brew: Brew) => {
+      return brew;
     })
     .catch((err: ApiError) => err);
 };
