@@ -4,11 +4,6 @@ info:
   title: Coffee-o-meter API
   license:
     name: MIT
-servers:
-  - url: http://localhost:3000/api
-    description: Optional server description, e.g. Main (production) server
-#  - url: http://staging-api.example.com
-#    description: Optional server description, e.g. Internal staging server for testing
 # findBy = GET
 # add = INSERT
 # create = ??
