@@ -14,8 +14,7 @@ export default async function handler(
     case "GET": {
       try {
         const brews: Brew[] = await prisma.brew.findMany();
-        res.status(200).json(brews);
-        console.log("returned brews");
+        return res.status(200).json(brews);
       } catch (e) {
         console.log(e);
         res.status(404).json(new ApiError(404, JSON.stringify(e)));
