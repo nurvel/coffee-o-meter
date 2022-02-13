@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Button, Paper, Text, Container, Title } from "@mantine/core";
-import { createBrew } from "../common/api/uiApiUtis";
+import { createBrew, getBrews } from "../common/api/uiApiUtis";
 
 const Home: NextPage = () => {
   const handeClick = () => {
@@ -35,6 +35,16 @@ const Home: NextPage = () => {
             }}
           >
             I made coffee
+          </Button>
+
+          <Button
+            className="my-button"
+            style={{ backgroundColor: "#000" }}
+            mx={20}
+            size="xl"
+            onClick={getBrews}
+          >
+            Get brews
           </Button>
         </Paper>
       </main>
