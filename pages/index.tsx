@@ -1,8 +1,14 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Button, Paper, Text, Container, Title } from "@mantine/core";
+import { createBrew } from "../common/api/uiApiUtis";
 
 const Home: NextPage = () => {
+  const handeClick = () => {
+    console.log("Brew initiated!");
+    createBrew();
+  };
+
   return (
     <Container>
       <Head>
@@ -17,17 +23,16 @@ const Home: NextPage = () => {
         <Paper padding="md" shadow="xs">
           <Container>
             <Title>Coffee-o-meter</Title>
-            <Text>Paper is the most basic ui component</Text>
-            <Text>
-              Use it to create cards, dropdowns, modals and other components
-              that require background with shadow
-            </Text>
+            <Text>Let your colleges know in Slack </Text>
           </Container>
           <Button
             className="my-button"
             style={{ backgroundColor: "#000" }}
             mx={20}
             size="xl"
+            onClick={() => {
+              handeClick();
+            }}
           >
             I made coffee
           </Button>
@@ -38,3 +43,12 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+// export async function getStaticProps() {
+//   const handleCreateBrew = createBrew;
+//   return {
+//     props: {
+//       handleCreateBrew,
+//     },
+//   };
+// }
