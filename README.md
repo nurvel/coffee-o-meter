@@ -22,7 +22,7 @@ npm run dev
 - Next.js bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 - TypeScript 
 - OpenAPI and [TS code generation](https://github.com/ferdikoomen/openapi-typescript-codegen)
-- [NextUI](https://nextui.org/docs/)
+- [Mantine](https://mantine.dev/) as component library
 
 ## Roadmap
 
@@ -41,5 +41,7 @@ Planned features or tech to implement tot the project.
 - [ ] Add automated Changelog
 - [ ] Multi-language Support
 - [ ] State management (Context?)
+- [ ] React Query
 - [ ] GitHub Actions
 - [ ] Deployment to Vercel
+- [ ] Lint
