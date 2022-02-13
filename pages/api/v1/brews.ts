@@ -13,7 +13,7 @@ export default function handler(
       break;
     }
     case "POST": {
-      res.status(200).json(mockData.brew);
+      res.status(201).json(mockData.brew);
       break;
     }
     default: {
