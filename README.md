@@ -28,16 +28,17 @@ npm run dev
 
 Planned features or tech to implement tot the project.
 ### Features
-- [ ] User is able to submit a brewed coffee pot
+- [x] User is able to submit a brewed coffee pot
 - [ ] Give [useless fact](https://useless-facts.sameerkumar.website/api) as reward 
 - [ ] Slack notification
 - [ ] Add location management
 - [ ] Statistics page with information of brewed coffee pots
-
+- [ ] Toaster notifications (success, too many frequent tries, error)
+- [ ] [confetti](https://github.com/catdad/canvas-confetti) on success
 #### Tech
-- [ ] Environment management (dev, prod)
-- [ ] Implement API endpoints
-- [ ] DB with [http://prisma.io](Prisma)
+- [x] Environment management (dev, prod)
+- [x] Implement API endpoints
+- [x] DB with [http://prisma.io](Prisma)
 - [ ] Add automated Changelog
 - [ ] Multi-language Support
 - [ ] State management (Context?)
