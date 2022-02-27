@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { useState } from "react";
 
 interface Props {
-  location: String;
+  location: string;
   onClickNewPot: (potSize: string) => void;
 }
 

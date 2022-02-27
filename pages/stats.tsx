@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
 
 interface Props {
-  stats: String[];
+  stats: string[];
 }
 
 const Stats: NextPage<Props> = ({ stats }: Props) => {
