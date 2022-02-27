@@ -4,12 +4,6 @@ info:
   title: Coffee-o-meter API
   license:
     name: MIT
-# findBy = GET
-# add = INSERT
-# create = ??
-# set = UPDATE
-# remove = DELETE
-# is = CHECKING STATUS
 paths:
   /v1/brews:
     get:
