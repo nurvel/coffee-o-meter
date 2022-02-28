@@ -61,6 +61,8 @@ components:
           type: Date
           format: date-tine
           example: "2021-01-30T08:30:00Z"
+        fact:
+          type: string
         potSize:
           $ref: "#/components/schemas/PotSize"
     Brews:
