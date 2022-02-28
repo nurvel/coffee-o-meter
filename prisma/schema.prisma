@@ -13,4 +13,5 @@ datasource db {
 model Brew {
   id       String   @id @default(cuid()) // collision resistant unique id
   dateTime DateTime
+  fact     String?
 }
