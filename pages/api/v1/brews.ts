@@ -22,12 +22,19 @@ export default async function handler(
       break;
     }
     case "POST": {
-      const createdBrew: Brew = await prisma.brew.create({
-        data: {
-          dateTime: new Date(),
-        },
-      });
-      res.status(201).json(createdBrew);
+      try {
+        const fact = await fetchRandomFact();
+        const createdBrew: Brew = await prisma.brew.create({
+          data: {
+            dateTime: new Date(),
+            fact,
+          },
+        });
+        return res.status(201).json(createdBrew);
+      } catch (e) {
+        console.log(e);
+        res.status(404).json(new ApiError(404, JSON.stringify(e)));
+      }
       break;
     }
     default: {
@@ -36,3 +43,14 @@ export default async function handler(
     }
   }
 }
+
+const fetchRandomFact = async (): Promise<string> => {
+  const RANDOM_FACT_URL = "https://useless-facts.sameerkumar.website/api";
+  return fetch(RANDOM_FACT_URL)
+    .then((res) => res.json())
+    .then((json) => json.data)
+    .catch((err) => {
+      console.log("API error fetching random fact", err);
+      return "I ran out of facts. This time you could discuss the weather";
+    });
+};
