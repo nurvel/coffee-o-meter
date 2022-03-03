@@ -6,6 +6,8 @@ import { Brew } from "../../../common/api/generated/models/Brew";
 
 const prisma = new PrismaClient();
 
+const BREW_THRESHOLD_MINUTES = 10;
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Brew | Brew[] | ApiError>
@@ -23,6 +25,12 @@ export default async function handler(
     }
     case "POST": {
       try {
+        const throttleBrew = await isThrottleBrew(BREW_THRESHOLD_MINUTES);
+        if (throttleBrew)
+          return res
+            .status(425)
+            .json(new ApiError(425, "Too early for a new brew!"));
+
         const fact = await fetchRandomFact();
         const createdBrew: Brew = await prisma.brew.create({
           data: {
@@ -53,4 +61,24 @@ const fetchRandomFact = async (): Promise<string> => {
       console.log("API error fetching random fact", err);
       return "I ran out of facts. This time you could discuss the weather";
     });
+};
+
+const findLatestBrew = async () => {
+  return await prisma.brew.findFirst({
+    orderBy: {
+      dateTime: "desc",
+    },
+    take: 1,
+  });
+};
+
+const isThrottleBrew = async (minutes: number): Promise<boolean> => {
+  const currentDateTime = new Date();
+  const latestBrewDateTime = (await findLatestBrew()).dateTime;
+
+  const throttleSeconds = minutes * 60;
+  return (
+    (currentDateTime.getTime() - latestBrewDateTime.getTime()) / 1000 <
+    throttleSeconds
+  );
 };
