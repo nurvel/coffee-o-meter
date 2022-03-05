@@ -6,7 +6,9 @@ import { Brew } from "../../../common/api/generated/models/Brew";
 
 const prisma = new PrismaClient();
 
-const BREW_THRESHOLD_MINUTES = 10;
+const DEFAULT_BREW_THRESHOLD_MINUTES = 10;
+const BREW_THRESHOLD_MINUTES =
+  process.env.NODE_ENV === "development" ? 0 : DEFAULT_BREW_THRESHOLD_MINUTES;
 
 export default async function handler(
   req: NextApiRequest,
@@ -38,7 +40,12 @@ export default async function handler(
             fact,
           },
         });
-        return res.status(201).json(createdBrew);
+
+        // const response = await postToSlackChannel(fact);
+
+        return postToSlackChannel(fact).then(() =>
+          res.status(201).json(createdBrew)
+        );
       } catch (e) {
         console.log(e);
         res.status(404).json(new ApiError(404, JSON.stringify(e)));
@@ -81,4 +88,22 @@ const isThrottleBrew = async (minutes: number): Promise<boolean> => {
     (currentDateTime.getTime() - latestBrewDateTime.getTime()) / 1000 <
     throttleSeconds
   );
+};
+
+const postToSlackChannel = async (message: string): Promise<Response> => {
+  const URL = "https://slack.com/api/chat.postMessage";
+
+  const payload = JSON.stringify({
+    channel: process.env.SLACK_CHANNEL_ID,
+    text: `:coffee: Fresh coffee is coming up in 5 minutes! Here is a random fact that you can discuss over coffee: "${message}"`,
+  });
+
+  return fetch(URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.SLACK_OAUTH_TOKEN}`,
+    },
+    body: payload,
+  });
 };
