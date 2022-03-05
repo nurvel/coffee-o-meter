@@ -41,8 +41,8 @@ Planned features or tech to implement tot the project.
 ### Features
 
 - [x] User is able to submit a brewed coffee pot
-- [ ] Give [useless fact](https://useless-facts.sameerkumar.website/api) as reward
-- [ ] Slack notification
+- [x] Give [useless fact](https://useless-facts.sameerkumar.website/api) as reward
+- [x] Slack notification
 - [ ] Add location management
 - [ ] Statistics page with information of brewed coffee pots
 - [ ] Toaster notifications (success, too many frequent tries, error)
