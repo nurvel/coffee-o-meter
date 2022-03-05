@@ -41,8 +41,6 @@ export default async function handler(
           },
         });
 
-        // const response = await postToSlackChannel(fact);
-
         return postToSlackChannel(fact).then(() =>
           res.status(201).json(createdBrew)
         );
@@ -95,7 +93,7 @@ const postToSlackChannel = async (message: string): Promise<Response> => {
 
   const payload = JSON.stringify({
     channel: process.env.SLACK_CHANNEL_ID,
-    text: `:coffee: Fresh coffee is coming up in 5 minutes! Here is a random fact that you can discuss over coffee: "${message}"`,
+    text: `:coffee: *Fresh coffee is coming up in 5 minutes!* Here is a random fact that you can discuss over coffee: _"${message}"_`,
   });
 
   return fetch(URL, {
