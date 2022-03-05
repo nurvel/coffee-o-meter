@@ -7,8 +7,8 @@ import { Brew } from "../../../common/api/generated/models/Brew";
 const prisma = new PrismaClient();
 
 const DEFAULT_BREW_THRESHOLD_MINUTES = 10;
-const BREW_THRESHOLD_MINUTES =
-  process.env.NODE_ENV === "development" ? 0 : DEFAULT_BREW_THRESHOLD_MINUTES;
+const BREW_THRESHOLD_SECONDS =
+  process.env.NODE_ENV === "development" ? 0 : DEFAULT_BREW_THRESHOLD_MINUTES * 60;
 
 export default async function handler(
   req: NextApiRequest,
@@ -27,7 +27,7 @@ export default async function handler(
     }
     case "POST": {
       try {
-        const throttleBrew = await isThrottleBrew(BREW_THRESHOLD_MINUTES);
+        const throttleBrew = await isThrottleBrew(BREW_THRESHOLD_SECONDS);
         if (throttleBrew)
           return res
             .status(425)
@@ -77,11 +77,10 @@ const findLatestBrew = async () => {
   });
 };
 
-const isThrottleBrew = async (minutes: number): Promise<boolean> => {
+const isThrottleBrew = async (throttleSeconds: number): Promise<boolean> => {
   const currentDateTime = new Date();
   const latestBrewDateTime = (await findLatestBrew()).dateTime;
 
-  const throttleSeconds = minutes * 60;
   return (
     (currentDateTime.getTime() - latestBrewDateTime.getTime()) / 1000 <
     throttleSeconds
