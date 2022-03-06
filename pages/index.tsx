@@ -1,11 +1,17 @@
-import type { NextPage } from "next";
+import type { GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import {
+  dehydrate,
+  QueryClient,
+  useQuery,
+  useMutation,
+  Mutation,
+} from "react-query";
 import { Button, Text, Container, Title, createStyles } from "@mantine/core";
 
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
-import { createBrew, getBrews } from "../common/api/uiApiUtis";
+import { createBrew, getBrews } from "../common/api/uiApiUtils";
 import { Brew } from "../common/api/generated";
 
 const useStyles = createStyles((theme, _params) => {
@@ -36,12 +42,22 @@ const useStyles = createStyles((theme, _params) => {
 const Home: NextPage = () => {
   const myStyles = useStyles().classes;
 
-  const { data, isLoading, isFetching } = useQuery<Brew[]>("brews", getBrews);
-  console.log(data);
+  // const { data, isLoading, isFetching, error } = useQuery<Brew[]>(
+  //   "brews",
+  //   getBrews
+  // );
+  // console.log("brews ", data);
+
+  const { mutate, isLoading, isSuccess, isError, error } = useMutation((data) =>
+    createBrew()
+  );
+
+  console.log(isLoading, isSuccess, isError, error);
 
   const handleClick = () => {
     console.log("Brew initiated!");
-    createBrew();
+    mutate();
+    // createBrew();
   };
 
   return (
@@ -91,7 +107,8 @@ const Home: NextPage = () => {
 
 export default Home;
 
-export async function getStaticProps() {
+// getStaticProps  - only in build time
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery<Brew[]>("brews", getBrews);
 
