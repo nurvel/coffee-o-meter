@@ -1,9 +1,12 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { dehydrate, QueryClient, useQuery } from "react-query";
 import { Button, Text, Container, Title, createStyles } from "@mantine/core";
-import { createBrew } from "../common/api/uiApiUtis";
+
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
+import { createBrew, getBrews } from "../common/api/uiApiUtis";
+import { Brew } from "../common/api/generated";
 
 const useStyles = createStyles((theme, _params) => {
   return {
@@ -16,7 +19,7 @@ const useStyles = createStyles((theme, _params) => {
       maxWidth: "340px",
       height: "auto",
       margin: "auto",
-      marginTop: "50px"
+      marginTop: "50px",
     },
     title: {
       margin: "5px",
@@ -32,6 +35,9 @@ const useStyles = createStyles((theme, _params) => {
 
 const Home: NextPage = () => {
   const myStyles = useStyles().classes;
+
+  const { data, isLoading, isFetching } = useQuery<Brew[]>("brews", getBrews);
+  console.log(data);
 
   const handleClick = () => {
     console.log("Brew initiated!");
@@ -51,7 +57,7 @@ const Home: NextPage = () => {
       <div className={myStyles.mascotImage}>
         <Image alt="Coffee mascot" src={coffeeMascotImg} />
       </div>
-      <Title className={myStyles.title}>Just made coffee?</Title>
+      <Title className={myStyles.title}>Did you make coffee?</Title>
       <Text className={myStyles.ingress}>
         Brilliant! Let your colleagues know about it in Slack channel{" "}
         <b>#coffee-o-meter</b>. Just press the button below.
@@ -67,7 +73,7 @@ const Home: NextPage = () => {
         }}
         // loading={true}
       >
-        I made coffee
+        Yes, I made coffee
       </Button>
 
       {/* <Button
@@ -85,11 +91,13 @@ const Home: NextPage = () => {
 
 export default Home;
 
-// export async function getStaticProps() {
-//   const handleCreateBrew = createBrew;
-//   return {
-//     props: {
-//       handleCreateBrew,
-//     },
-//   };
-// }
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery<Brew[]>("brews", getBrews);
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+}
