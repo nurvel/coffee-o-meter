@@ -21,6 +21,7 @@ export default async function handler(
     case "GET": {
       try {
         const brews: Brew[] = await getAllBrews();
+        console.log("GET /brews");
         return res.status(200).json(brews);
       } catch (e) {
         console.log(e);
@@ -28,6 +29,7 @@ export default async function handler(
       }
     }
     case "POST": {
+      console.log("POST /brews");
       try {
         const latestBrew = await getLatestBrew();
         if (isThrottleBrew(BREW_THRESHOLD_SECONDS, latestBrew)) {
