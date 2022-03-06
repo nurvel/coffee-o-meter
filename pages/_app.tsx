@@ -3,6 +3,7 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { MantineProvider } from "@mantine/core";
 
 export default function App(props: AppProps) {
@@ -34,6 +35,7 @@ export default function App(props: AppProps) {
             <Component {...pageProps} />
           </MantineProvider>
         </Hydrate>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
     //    </Layout>
