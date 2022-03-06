@@ -21,7 +21,7 @@ export default async function handler(
     case "GET": {
       try {
         const brews: Brew[] = await getAllBrews();
-        console.log("GET /brews");
+        console.log("GET /brews"); // TODO: replace these with actual logs
         return res.status(200).json(brews);
       } catch (e) {
         console.log(e);
