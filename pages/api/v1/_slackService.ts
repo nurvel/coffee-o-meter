@@ -5,7 +5,7 @@ export const postToSlackChannel = async (
 
   const payload = JSON.stringify({
     channel: process.env.SLACK_CHANNEL_ID,
-    text: `:coffee: *Fresh coffee is coming up in 5 minutes!* Here is a random fact that you can discuss over coffee: _"${message}"_`,
+    text: `*Coffee is coming up!* :coffee: Here is a random fact that you can discuss over a cup of java: _"${message}"_ <!here>`,
   });
 
   return fetch(URL, {
