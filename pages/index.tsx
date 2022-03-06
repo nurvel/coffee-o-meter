@@ -13,6 +13,10 @@ const useStyles = createStyles((theme, _params) => {
     mascotImage: {
       border: 0,
       padding: "30px",
+      maxWidth: "340px",
+      height: "auto",
+      margin: "auto",
+      marginTop: "50px"
     },
     title: {
       margin: "5px",
@@ -21,7 +25,7 @@ const useStyles = createStyles((theme, _params) => {
       margin: "10px",
     },
     button: {
-      margin: "20px",
+      margin: "40px",
     },
   };
 });
@@ -35,7 +39,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <Container size="sm" className={myStyles.app}>
+    <Container size="xs" className={myStyles.app}>
       <Head>
         <title>Coffee-o-meter</title>
         <meta
@@ -49,14 +53,15 @@ const Home: NextPage = () => {
       </div>
       <Title className={myStyles.title}>Just made coffee?</Title>
       <Text className={myStyles.ingress}>
-        Brilliant! Let your colleagues know about it in Slack - just press the
-        button below.
+        Brilliant! Let your colleagues know about it in Slack channel{" "}
+        <b>#coffee-o-meter</b>. Just press the button below.
       </Text>
       <Button
         className={myStyles.button}
-        style={{ backgroundColor: "#000" }}
         mx={20}
         size="xl"
+        color="orange"
+        radius="md"
         onClick={() => {
           handleClick();
         }}
