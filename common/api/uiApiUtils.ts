@@ -1,4 +1,4 @@
-import { ApiError, Brew, BrewService } from "./generated";
+import { ApiError, Brew, BrewService, CancelError } from "./generated";
 import { OpenAPIConfig } from "./generated/core/OpenAPI";
 
 const openAPIConfig: OpenAPIConfig = {
@@ -12,7 +12,6 @@ const openAPIConfig: OpenAPIConfig = {
   HEADERS: undefined,
   ENCODE_PATH: undefined,
 };
-
 const client = new BrewService(openAPIConfig).default;
 
 export const getBrews = async (): Promise<Brew[]> => {
@@ -21,8 +20,8 @@ export const getBrews = async (): Promise<Brew[]> => {
     .then((brews: Brew[]) => {
       return brews;
     })
-    .catch((err: ApiError) => {
-      console.log(err);
+    .catch((err) => {
+      console.log("GET /brews API client error", err);
       return [];
     });
 };
@@ -34,7 +33,7 @@ export const getLatestBrews = async (): Promise<Brew | null> => {
       return brew;
     })
     .catch((err: ApiError) => {
-      console.log(err);
+      console.log("GET /last brew API client error", err);
       return null;
     });
 };
@@ -46,7 +45,7 @@ export const createBrew = async (): Promise<Brew | null> => {
       return brew;
     })
     .catch((err: ApiError) => {
-      console.log(err);
+      console.log("POST /brews API client error", err);
       return null;
     });
 };
