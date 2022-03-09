@@ -1,18 +1,12 @@
 import type { GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import {
-  dehydrate,
-  QueryClient,
-  useQuery,
-  useMutation,
-  Mutation,
-} from "react-query";
 import { Button, Text, Container, Title, createStyles } from "@mantine/core";
+import { DehydratedState, QueryClient } from "react-query";
+import { dehydrate } from "react-query/hydration";
 
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
-import { createBrew, getBrews } from "../common/api/uiApiUtils";
-import { Brew } from "../common/api/generated";
+import { useCreateBrew, useGetBrews } from "../components/hooks/brewHooks";
 
 const useStyles = createStyles((theme, _params) => {
   return {
@@ -39,25 +33,26 @@ const useStyles = createStyles((theme, _params) => {
   };
 });
 
-const Home: NextPage = () => {
+interface Props {
+  dehydratedState: DehydratedState;
+}
+
+const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
   const myStyles = useStyles().classes;
 
-  // const { data, isLoading, isFetching, error } = useQuery<Brew[]>(
-  //   "brews",
-  //   getBrews
-  // );
-  // console.log("brews ", data);
-
-  const { mutate, isLoading, isSuccess, isError, error } = useMutation((data) =>
-    createBrew()
-  );
-
-  console.log(isLoading, isSuccess, isError, error);
+  // hydrate(queryClient, dehydratedState);
+  const getBrewsHook = useGetBrews();
+  const createBrewHook = useCreateBrew();
+  // const getBrewsHook = useQuery<Brew[]>("brews", getBrews);
+  // const createBrewHook = useMutation(() => createBrew(), {
+  //   onSuccess: (data) => {
+  //     console.log("inside use mutation ", queryClient);
+  //     queryClient.invalidateQueries("brews");
+  //   },
+  // });
 
   const handleClick = () => {
-    console.log("Brew initiated!");
-    mutate();
-    // createBrew();
+    createBrewHook.mutate();
   };
 
   return (
@@ -87,30 +82,28 @@ const Home: NextPage = () => {
         onClick={() => {
           handleClick();
         }}
-        // loading={true}
+        loading={createBrewHook.isLoading}
       >
         Yes, I made coffee
       </Button>
 
-      {/* <Button
-        className="my-button"
-        style={{ backgroundColor: "#000" }}
-        mx={20}
-        size="xl"
-        onClick={getBrews}
-      >
-        Get brews
-      </Button> */}
+      {getBrewsHook.data?.map((d) => (
+        <li key={d.id}>{d.dateTime}</li>
+      ))}
     </Container>
   );
 };
 
 export default Home;
 
-// getStaticProps  - only in build time
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery<Brew[]>("brews", getBrews);
+  const fetchBrews = () =>
+    fetch("http://localhost:3000/api/v1/brews")
+      .then((res) => res.text())
+      .then((text) => JSON.parse(text));
+  await queryClient.prefetchQuery("brews", fetchBrews);
+  console.log("GET brews: server");
 
   return {
     props: {
