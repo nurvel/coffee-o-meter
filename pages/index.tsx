@@ -5,9 +5,9 @@ import { Button, Text, Container, Title, createStyles } from "@mantine/core";
 import { DehydratedState, hydrate, QueryClient } from "react-query";
 import { dehydrate } from "react-query/hydration";
 
+import { fetchBrewsServerSide } from "./api/v1/brews";
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
 import { useCreateBrew, useGetBrews } from "../components/hooks/brewHooks";
-import { queryClient } from "./_app";
 const useStyles = createStyles((theme, _params) => {
   return {
     app: {
@@ -40,7 +40,7 @@ interface Props {
 const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
   const myStyles = useStyles().classes;
 
-  hydrate(queryClient, dehydratedState);
+  // hydrate(queryClient, dehydratedState);
   const getBrewsHook = useGetBrews();
   const createBrewHook = useCreateBrew();
   // const getBrewsHook = useQuery<Brew[]>("brews", getBrews);
@@ -98,11 +98,7 @@ export default Home;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const queryClient = new QueryClient();
-  const fetchBrews = () =>
-    fetch("http://localhost:3000/api/v1/brews")
-      .then((res) => res.text())
-      .then((text) => JSON.parse(text));
-  await queryClient.prefetchQuery("brews", fetchBrews);
+  await queryClient.prefetchQuery("brews", fetchBrewsServerSide);
   console.log("GET brews: server");
 
   return {
