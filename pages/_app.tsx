@@ -6,9 +6,11 @@ import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { MantineProvider } from "@mantine/core";
 
+// const queryClient = React.useRef(new QueryClient());
+export const queryClient = new QueryClient();
+
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
-  const queryClient = React.useRef(new QueryClient());
 
   return (
     //    <Layout>
@@ -20,10 +22,8 @@ export default function App(props: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <QueryClientProvider client={queryClient.current}>
+      <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          {" "}
-          {/* Place in cache in all components */}
           <MantineProvider
             withGlobalStyles
             withNormalizeCSS
@@ -34,8 +34,8 @@ export default function App(props: AppProps) {
           >
             <Component {...pageProps} />
           </MantineProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>
-        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
     //    </Layout>
