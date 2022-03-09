@@ -2,12 +2,12 @@ import type { GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { Button, Text, Container, Title, createStyles } from "@mantine/core";
-import { DehydratedState, QueryClient } from "react-query";
+import { DehydratedState, hydrate, QueryClient } from "react-query";
 import { dehydrate } from "react-query/hydration";
 
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
 import { useCreateBrew, useGetBrews } from "../components/hooks/brewHooks";
-
+import { queryClient } from "./_app";
 const useStyles = createStyles((theme, _params) => {
   return {
     app: {
@@ -40,7 +40,7 @@ interface Props {
 const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
   const myStyles = useStyles().classes;
 
-  // hydrate(queryClient, dehydratedState);
+  hydrate(queryClient, dehydratedState);
   const getBrewsHook = useGetBrews();
   const createBrewHook = useCreateBrew();
   // const getBrewsHook = useQuery<Brew[]>("brews", getBrews);
