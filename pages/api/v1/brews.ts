@@ -60,7 +60,7 @@ export default async function handler(
 
 export const fetchBrewsServerSide = () => {
   const URL = getBaseURL();
-  return fetch(`${URL}/api/v1/brews`)
+  return fetch(`https://${URL}/api/v1/brews`)
     .then((res) => {
       return res.text();
     })
@@ -70,7 +70,7 @@ export const fetchBrewsServerSide = () => {
 
 const getBaseURL = () => {
   console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_EN);
-  if (process.env.NODE_ENV === "development") return "http://localhost:3000";
+  if (process.env.NODE_ENV === "development") return "localhost:3000";
   if (process.env.NEXT_PUBLIC_VERCEL_ENV !== undefined)
     return process.env.NEXT_PUBLIC_VERCEL_URL;
   throw new Error("Unkown enviroment");

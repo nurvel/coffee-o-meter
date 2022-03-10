@@ -52,7 +52,7 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
   console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
   console.log(
     "SERVER API URL",
-    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/v1/brews`
+    `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/v1/brews`
   );
 
   return (
