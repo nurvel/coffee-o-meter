@@ -1,33 +1,28 @@
 //import Layout from "../components/layout";
 import { AppProps } from "next/app";
-import Head from "next/head";
+import React from "react";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { MantineProvider } from "@mantine/core";
 
-export default function App(props: AppProps) {
-  const { Component, pageProps } = props;
+export default function App({ Component, pageProps }: AppProps) {
+  const [queryClient] = React.useState(() => new QueryClient());
 
   return (
-    //    <Layout>
-    <>
-      <Head>
-        <title>Page title</title>
-        <meta
-          name="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width"
-        />
-      </Head>
-
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          /** Put your mantine theme override here */
-          colorScheme: "light",
-        }}
-      >
-        <Component {...pageProps} />
-      </MantineProvider>
-    </>
-    //    </Layout>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            /** Put your mantine theme override here */
+            colorScheme: "light",
+          }}
+        >
+          <Component {...pageProps} />
+        </MantineProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </Hydrate>
+    </QueryClientProvider>
   );
 }
