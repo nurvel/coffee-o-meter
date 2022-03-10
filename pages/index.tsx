@@ -2,12 +2,13 @@ import type { GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { Button, Text, Container, Title, createStyles } from "@mantine/core";
-import { DehydratedState, hydrate, QueryClient } from "react-query";
+import { DehydratedState, QueryClient } from "react-query";
 import { dehydrate } from "react-query/hydration";
 
 import { fetchBrewsServerSide } from "./api/v1/brews";
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
 import { useCreateBrew, useGetBrews } from "../components/hooks/brewHooks";
+
 const useStyles = createStyles((theme, _params) => {
   return {
     app: {
@@ -39,21 +40,15 @@ interface Props {
 
 const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
   const myStyles = useStyles().classes;
-
-  // hydrate(queryClient, dehydratedState);
   const getBrewsHook = useGetBrews();
   const createBrewHook = useCreateBrew();
-  // const getBrewsHook = useQuery<Brew[]>("brews", getBrews);
-  // const createBrewHook = useMutation(() => createBrew(), {
-  //   onSuccess: (data) => {
-  //     console.log("inside use mutation ", queryClient);
-  //     queryClient.invalidateQueries("brews");
-  //   },
-  // });
 
   const handleClick = () => {
     createBrewHook.mutate();
   };
+
+  console.log("NODE_ENV", process.env.NODE_ENV);
+  console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
 
   return (
     <Container size="xs" className={myStyles.app}>
