@@ -4,7 +4,7 @@ A simple App for getting your colleges informed that you made coffee.
 
 ## Getting Started
 
-Init the local dev environment by generating required code based on: _common/api/coffee-o-meter-openapi.yaml_ and run in local dev [http://localhost:3000](http://localhost:3000).
+Init & run local environment 
 
 ```
 npm install             # install dependencies
@@ -17,7 +17,6 @@ npm run dev             # run in local in port 3000
 ## OpenAPI naming conventions
 
 TypeScript types and methods are generated based on [openAPI doc](common/api/coffee-o-meter-openapi.yaml). To have persistent function naming below is followed.
-
 
 
 | API Method | Operation Id       |
@@ -43,21 +42,25 @@ Planned features or tech to implement tot the project.
 - [x] User is able to submit a brewed coffee pot
 - [x] Give [useless fact](https://useless-facts.sameerkumar.website/api) as reward
 - [x] Slack notification
-- [ ] Add location management
-- [ ] Statistics page with information of brewed coffee pots
-- [ ] Toaster notifications (success, too many frequent tries, error)
 - [ ] [confetti](https://github.com/catdad/canvas-confetti) on success
+- [ ] Toaster notifications (success, too many frequent tries, error)
+- [ ] Statistics page with information of brewed coffee pots
+- [ ] 2.0 Add organisation and location management + configurations
+- [ ] 2.0 Add new notifications services (Teams, email, SMS, etc.)
+- [ ] 3.0 Extend to manage other breakroom features
 
 #### Tech
 
 - [x] Environment management (dev, prod)
-- [x] Deployments to Vercel
+- [x] Automatic deployments to Vercel
 - [x] Implement API endpoints
-- [x] [https.//elephantsql.com](Postgres DB) with [http://prisma.io](Prisma)
+- [x] [https://elephantsql.com](Postgres DB) with [http://prisma.io](Prisma ORM and migrations)
 - [x] Logs in [https://logflare.app/](Logflare)
-- [ ] React Query
-- [ ] State management (Context?)
+- [x] React Query (Aync state)
+- [ ] Logging framework
+- [ ] Global State management (Context API)
 - [ ] Add automated Changelog
 - [ ] Multi-language Support
 - [ ] GitHub Actions
 - [ ] Lint
+- [ ] 2.0 React Native?
