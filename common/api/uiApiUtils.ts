@@ -1,4 +1,4 @@
-import { ApiError, Brew, BrewService, CancelError } from "./generated";
+import { ApiError, Brew, BrewService } from "./generated";
 import { OpenAPIConfig } from "./generated/core/OpenAPI";
 
 const openAPIConfig: OpenAPIConfig = {

@@ -66,7 +66,7 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={myStyles.mascotImage}>
-        <Image alt="Coffee mascot" src={coffeeMascotImg} />
+        <Image alt="Coffee mascot" src={coffeeMascotImg} priority={true} />
       </div>
       <Title className={myStyles.title}>Did you make coffee?</Title>
       <Text className={myStyles.ingress}>
