@@ -9,6 +9,12 @@ export const navigationOptions: NavigationOptions[] = [
   { displayName: "Statistics", URL: "stats" },
 ];
 
+export const getLatestBrew = (brews: Brew[] = []): Brew => {
+  return brews.reduce((next, prev) =>
+    prev.dateTime > next.dateTime ? prev : next
+  );
+};
+
 // API Utils
 
 export const isThrottleBrew = (
