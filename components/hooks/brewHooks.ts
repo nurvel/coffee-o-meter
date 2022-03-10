@@ -1,11 +1,11 @@
 import { createBrew, getBrews } from "../../common/api/uiApiUtils";
-import { useQuery, useMutation, QueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { Brew } from "../../common/api/generated";
 
 // import { queryClient } from "../../pages/_app";
 
 export const useCreateBrew = () => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   //const { mutate, isLoading, isSuccess, isError, error }
   return useMutation((data) => createBrew(), {
     onSuccess: () => {
