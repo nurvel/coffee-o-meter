@@ -7,7 +7,11 @@ import { dehydrate } from "react-query/hydration";
 
 import { fetchBrewsServerSide } from "./api/v1/brews";
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
-import { useCreateBrew, useGetBrews } from "../components/hooks/brewHooks";
+import {
+  useCreateBrew,
+  useGetBrews,
+  useLatestBrew,
+} from "../components/hooks/brewHooks";
 
 const useStyles = createStyles((theme, _params) => {
   return {
@@ -47,12 +51,20 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
     createBrewHook.mutate();
   };
 
-  console.log("NODE_ENV", process.env.NODE_ENV);
-  console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
-  console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
+  // console.log("NODE_ENV", process.env.NODE_ENV);
+  // console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
+  // console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
+  // console.log(
+  //   "SERVER API URL",
+  //   `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/v1/brews`
+  // );
+
+  const [isThrottle, throttleMilliseconds, lastBrew] = useLatestBrew();
   console.log(
-    "SERVER API URL",
-    `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/v1/brews`
+    "isThrottle",
+    isThrottle,
+    "throttleMilliseconds",
+    throttleMilliseconds
   );
 
   return (
@@ -73,19 +85,23 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
         Brilliant! Let your colleagues know about it in Slack channel{" "}
         <b>#coffee-o-meter</b>. Just press the button below.
       </Text>
-      <Button
-        className={myStyles.button}
-        mx={20}
-        size="xl"
-        color="orange"
-        radius="md"
-        onClick={() => {
-          handleClick();
-        }}
-        loading={createBrewHook.isLoading}
-      >
-        Yes, I made coffee
-      </Button>
+      {isThrottle ? (
+        <p>Brew already coming up!</p>
+      ) : (
+        <Button
+          className={myStyles.button}
+          mx={20}
+          size="xl"
+          color="orange"
+          radius="md"
+          onClick={() => {
+            handleClick();
+          }}
+          loading={createBrewHook.isLoading}
+        >
+          Yes, I made coffee
+        </Button>
+      )}
 
       {getBrewsHook.data?.map((d) => (
         <li key={d.id}>{d.dateTime}</li>
