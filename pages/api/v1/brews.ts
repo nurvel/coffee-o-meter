@@ -10,7 +10,7 @@ import { getRandomFact } from "./_factService";
 const DEFAULT_BREW_THRESHOLD_MINUTES = 10;
 const BREW_THRESHOLD_SECONDS =
   process.env.NODE_ENV === "development"
-    ? 0
+    ? 10
     : DEFAULT_BREW_THRESHOLD_MINUTES * 60;
 
 export default async function handler(
