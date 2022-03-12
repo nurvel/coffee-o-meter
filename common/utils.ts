@@ -28,3 +28,9 @@ export const isThrottleBrew = (
     throttleSeconds
   );
 };
+
+export const brewStartedSinceMilliseconds = (brew: Brew) => {
+  const currentDateTime = new Date();
+  const latestBrewDateTime = new Date(brew.dateTime);
+  return currentDateTime.getTime() - latestBrewDateTime.getTime();
+};
