@@ -1,13 +1,21 @@
 import type { GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { Button, Text, Container, Title, createStyles } from "@mantine/core";
+import {
+  Button,
+  Text,
+  Container,
+  Title,
+  createStyles,
+  Progress,
+  Blockquote,
+} from "@mantine/core";
 import { DehydratedState, QueryClient } from "react-query";
 import { dehydrate } from "react-query/hydration";
 
 import { fetchBrewsServerSide } from "./api/v1/brews";
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
-import { useCreateBrew, useGetBrews } from "../components/hooks/brewHooks";
+import { useCreateBrew, useLatestBrew } from "../components/hooks/brewHooks";
 
 const useStyles = createStyles((theme, _params) => {
   return {
@@ -26,10 +34,13 @@ const useStyles = createStyles((theme, _params) => {
       margin: "5px",
     },
     ingress: {
-      margin: "10px",
+      margin: "20px",
+    },
+    progressBar: {
+      margin: "30px 20px 10px 20px",
     },
     button: {
-      margin: "40px",
+      margin: "20px 20px 10px 20px",
     },
   };
 });
@@ -40,8 +51,8 @@ interface Props {
 
 const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
   const myStyles = useStyles().classes;
-  const getBrewsHook = useGetBrews();
   const createBrewHook = useCreateBrew();
+  const [isThrottle, lastBrew] = useLatestBrew();
 
   const handleClick = () => {
     createBrewHook.mutate();
@@ -50,10 +61,6 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
   console.log("NODE_ENV", process.env.NODE_ENV);
   console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
   console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
-  console.log(
-    "SERVER API URL",
-    `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/v1/brews`
-  );
 
   return (
     <Container size="xs" className={myStyles.app}>
@@ -68,28 +75,48 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
       <div className={myStyles.mascotImage}>
         <Image alt="Coffee mascot" src={coffeeMascotImg} priority={true} />
       </div>
-      <Title className={myStyles.title}>Did you make coffee?</Title>
-      <Text className={myStyles.ingress}>
-        Brilliant! Let your colleagues know about it in Slack channel{" "}
-        <b>#coffee-o-meter</b>. Just press the button below.
-      </Text>
-      <Button
-        className={myStyles.button}
-        mx={20}
-        size="xl"
-        color="orange"
-        radius="md"
-        onClick={() => {
-          handleClick();
-        }}
-        loading={createBrewHook.isLoading}
-      >
-        Yes, I made coffee
-      </Button>
+      <Container>
+        {isThrottle ? (
+          <>
+            <Title className={myStyles.title}>Coffee is on the way!</Title>
+            <Progress
+              value={100}
+              label="The coffee is brewed"
+              size="xl"
+              radius="xl"
+              animate
+              color="orange"
+              className={myStyles.progressBar}
+            />
+            <br />
+            <Blockquote color="orange" cite="– Random Fact API">
+              {lastBrew.fact}
+            </Blockquote>
+          </>
+        ) : (
+          <>
+            <Title className={myStyles.title}>Did you make coffee?</Title>
+            <Text className={myStyles.ingress}>
+              Brilliant! Let your colleagues know about it in Slack channel{" "}
+              <b>#coffee-o-meter</b>. Just press the button below.
+            </Text>
 
-      {getBrewsHook.data?.map((d) => (
-        <li key={d.id}>{d.dateTime}</li>
-      ))}
+            <Button
+              className={myStyles.button}
+              mx={20}
+              size="xl"
+              color="orange"
+              radius="md"
+              onClick={() => {
+                handleClick();
+              }}
+              loading={createBrewHook.isLoading}
+            >
+              Yes, I made coffee
+            </Button>
+          </>
+        )}
+      </Container>
     </Container>
   );
 };
