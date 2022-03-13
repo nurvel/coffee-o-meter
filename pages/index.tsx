@@ -38,13 +38,13 @@ const useStyles = createStyles((theme, _params) => {
       margin: "5px",
     },
     ingress: {
-      margin: "10px",
+      margin: "20px",
     },
     progressBar: {
       margin: "30px 20px 10px 20px",
     },
     button: {
-      margin: "30px 20px 10px 20px",
+      margin: "20px 20px 10px 20px",
     },
   };
 });
