@@ -15,11 +15,7 @@ import { dehydrate } from "react-query/hydration";
 
 import { fetchBrewsServerSide } from "./api/v1/brews";
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
-import {
-  useCreateBrew,
-  useGetBrews,
-  useLatestBrew,
-} from "../components/hooks/brewHooks";
+import { useCreateBrew, useLatestBrew } from "../components/hooks/brewHooks";
 
 const useStyles = createStyles((theme, _params) => {
   return {
@@ -55,28 +51,16 @@ interface Props {
 
 const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
   const myStyles = useStyles().classes;
-  const getBrewsHook = useGetBrews();
   const createBrewHook = useCreateBrew();
+  const [isThrottle, lastBrew] = useLatestBrew();
 
   const handleClick = () => {
     createBrewHook.mutate();
   };
 
-  // console.log("NODE_ENV", process.env.NODE_ENV);
-  // console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
-  // console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
-  // console.log(
-  //   "SERVER API URL",
-  //   `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/v1/brews`
-  // );
-
-  const [isThrottle, throttleMilliseconds, lastBrew] = useLatestBrew();
-  console.log(
-    "isThrottle",
-    isThrottle,
-    "throttleMilliseconds",
-    throttleMilliseconds
-  );
+  console.log("NODE_ENV", process.env.NODE_ENV);
+  console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
+  console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
 
   return (
     <Container size="xs" className={myStyles.app}>

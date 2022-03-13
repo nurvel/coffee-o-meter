@@ -27,7 +27,7 @@ export const useGetBrews = () => {
   return useQuery<Brew[]>("brews", getBrews);
 };
 
-export const useLatestBrew = () :[boolean, number, Brew]=> {
+export const useLatestBrew = (): [boolean, Brew, number] => {
   const timeout = useRef<() => void>();
 
   const getBrewsHook = useGetBrews();
@@ -54,5 +54,5 @@ export const useLatestBrew = () :[boolean, number, Brew]=> {
     }, throttleMilliseconds);
   }
 
-  return [isThrottle, throttleMilliseconds, latestBrew];
+  return [isThrottle, latestBrew, throttleMilliseconds];
 };
