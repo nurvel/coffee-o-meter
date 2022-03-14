@@ -52,15 +52,15 @@ interface Props {
 const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
   const myStyles = useStyles().classes;
   const createBrewHook = useCreateBrew();
-  const [isThrottle, lastBrew] = useLatestBrew();
+  const [isThrottle, lastBrew, throttlePercentage] = useLatestBrew();
 
   const handleClick = () => {
     createBrewHook.mutate();
   };
 
-  console.log("NODE_ENV", process.env.NODE_ENV);
-  console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
-  console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
+  // console.log("NODE_ENV", process.env.NODE_ENV);
+  // console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
+  // console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
 
   return (
     <Container size="xs" className={myStyles.app}>
@@ -80,8 +80,8 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
           <>
             <Title className={myStyles.title}>Coffee is on the way!</Title>
             <Progress
-              value={100}
-              label="The coffee is brewed"
+              value={Number.parseInt(throttlePercentage)}
+              label={`${throttlePercentage} %`}
               size="xl"
               radius="xl"
               animate

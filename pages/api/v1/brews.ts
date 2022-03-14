@@ -7,7 +7,7 @@ import { postToSlackChannel } from "./_slackService";
 import { isThrottleBrew } from "../../../common/utils";
 import { getRandomFact } from "./_factService";
 
-const DEFAULT_BREW_THRESHOLD_MINUTES = 10;
+const DEFAULT_BREW_THRESHOLD_MINUTES = 5;
 const BREW_THRESHOLD_SECONDS =
   process.env.NODE_ENV === "development"
     ? 10
