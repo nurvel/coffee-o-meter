@@ -61,7 +61,6 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
   // console.log("NODE_ENV", process.env.NODE_ENV);
   // console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
   // console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
-  console.log("Component render:", isThrottle, lastBrew.id, throttlePercentage);
 
   return (
     <Container size="xs" className={myStyles.app}>
