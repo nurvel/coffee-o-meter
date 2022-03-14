@@ -30,10 +30,10 @@ export const useLatestBrew = (): [boolean, Brew, string, number] => {
   const [throttleMs, setThrottleMs] = useState(
     BREW_THRESHOLD_SECONDS - brewStartedSinceMs(latestBrew)
   );
-  console.log("useLatestBrew: Hook running", latestBrew, throttleMs);
+  console.log("useLatestBrew: Hook running", throttleMs, latestBrew.id);
 
   useEffect(() => {
-    console.log("UseEffect: Setting interval");
+    console.log("UseEffect: Setting interval, throttleMs", throttleMs);
     const interval = setInterval(() => {
       if (throttleMs > 0) {
         console.log("UseEffect: throttleMs gate passed, setting interval");
@@ -44,7 +44,10 @@ export const useLatestBrew = (): [boolean, Brew, string, number] => {
   }, [latestBrew, throttleMs]);
 
   useEffect(() => {
-    console.log("UseEffect: setThrottleMs");
+    console.log(
+      "UseEffect: setThrottleMs:",
+      BREW_THRESHOLD_SECONDS - brewStartedSinceMs(latestBrew)
+    );
     setThrottleMs(BREW_THRESHOLD_SECONDS - brewStartedSinceMs(latestBrew));
   }, [latestBrew]);
 
