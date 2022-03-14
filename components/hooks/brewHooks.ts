@@ -27,28 +27,34 @@ export const useGetBrews = () => {
   return useQuery<Brew[]>("brews", getBrews);
 };
 
-export const useLatestBrew = (): [boolean, Brew, number] => {
-  // const timeout = useRef<() => void>();
-
+export const useLatestBrew = (): [boolean, Brew, string, number] => {
   const getBrewsHook = useGetBrews();
   const latestBrew: Brew = getLatestBrew(getBrewsHook.data); // TODO: API endpoint for latest brew
   const [throttleMs, setThrottleMs] = useState(
     BREW_THRESHOLD_SECONDS - brewStartedSinceMs(latestBrew)
   );
-  // const timerIdRef = useRef<NodeJS.Timeout>();
 
-  console.log("RUNNING HOOK", "throttleMs:", throttleMs, "id:", latestBrew.id);
-
-  // const interval = useRef<NodeJS.Timeout>();
   useEffect(() => {
     const interval = setInterval(() => {
       if (throttleMs > 0) {
-        setThrottleMs((current) => current - 1000);
+        setThrottleMs((current) => current - 100);
       }
-    }, 1000);
-
+    }, 100);
     return () => clearInterval(interval);
   }, [throttleMs]);
 
-  return [throttleMs > 0, latestBrew, throttleMs];
+  useEffect(() => {
+    setThrottleMs(BREW_THRESHOLD_SECONDS - brewStartedSinceMs(latestBrew));
+  }, [latestBrew]);
+
+  const isThrottle = throttleMs > 0;
+  const throttlePercentage: number =
+    ((BREW_THRESHOLD_SECONDS - throttleMs) / BREW_THRESHOLD_SECONDS) * 100;
+
+  return [
+    isThrottle,
+    latestBrew,
+    parseFloat(throttlePercentage.toString()).toFixed(),
+    throttleMs,
+  ];
 };
