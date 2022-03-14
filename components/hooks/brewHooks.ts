@@ -36,11 +36,12 @@ export const useLatestBrew = (): [boolean, Brew, string, number] => {
     console.log("UseEffect: Setting interval");
     const interval = setInterval(() => {
       if (throttleMs > 0) {
+        console.log("UseEffect: throttleMs gate passed, setting interval");
         setThrottleMs((current) => current - 100);
       }
     }, 100);
     return () => clearInterval(interval);
-  }, [throttleMs]);
+  }, [latestBrew, throttleMs]);
 
   useEffect(() => {
     console.log("UseEffect: setThrottleMs");
