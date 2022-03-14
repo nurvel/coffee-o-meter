@@ -5,11 +5,11 @@ import { brewStartedSinceMs, getLatestBrew } from "../../common/utils";
 import { useEffect, useState } from "react";
 
 // TODO: This is not also in API routes /brew. Remove duplication
-const DEFAULT_BREW_THRESHOLD_MINUTES = 10;
+const DEFAULT_BREW_THRESHOLD_MINUTES = 5;
 const BREW_THRESHOLD_SECONDS =
   process.env.NODE_ENV === "development"
     ? 10000
-    : DEFAULT_BREW_THRESHOLD_MINUTES * 60;
+    : DEFAULT_BREW_THRESHOLD_MINUTES * 60000;
 
 export const useCreateBrew = () => {
   const queryClient = useQueryClient();
