@@ -1,11 +1,8 @@
 import { createBrew, getBrews } from "../../common/api/uiApiUtils";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { Brew } from "../../common/api/generated";
-import {
-  brewStartedSinceMilliseconds as brewStartedSinceMs,
-  getLatestBrew,
-} from "../../common/utils";
-import { useEffect, useRef, useState } from "react";
+import { brewStartedSinceMs, getLatestBrew } from "../../common/utils";
+import { useEffect, useState } from "react";
 
 // TODO: This is not also in API routes /brew. Remove duplication
 const DEFAULT_BREW_THRESHOLD_MINUTES = 10;
@@ -33,8 +30,10 @@ export const useLatestBrew = (): [boolean, Brew, string, number] => {
   const [throttleMs, setThrottleMs] = useState(
     BREW_THRESHOLD_SECONDS - brewStartedSinceMs(latestBrew)
   );
+  console.log("useLatestBrew: Hook running", latestBrew, throttleMs);
 
   useEffect(() => {
+    console.log("UseEffect: Setting interval");
     const interval = setInterval(() => {
       if (throttleMs > 0) {
         setThrottleMs((current) => current - 100);
@@ -44,6 +43,7 @@ export const useLatestBrew = (): [boolean, Brew, string, number] => {
   }, [throttleMs]);
 
   useEffect(() => {
+    console.log("UseEffect: setThrottleMs");
     setThrottleMs(BREW_THRESHOLD_SECONDS - brewStartedSinceMs(latestBrew));
   }, [latestBrew]);
 

@@ -58,9 +58,10 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
     createBrewHook.mutate();
   };
 
-  console.log("NODE_ENV", process.env.NODE_ENV);
-  console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
-  console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
+  // console.log("NODE_ENV", process.env.NODE_ENV);
+  // console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
+  // console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
+  console.log("component", isThrottle, lastBrew, throttlePercentage);
 
   return (
     <Container size="xs" className={myStyles.app}>
