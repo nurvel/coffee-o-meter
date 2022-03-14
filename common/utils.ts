@@ -21,16 +21,15 @@ export const isThrottleBrew = (
   throttleSeconds: number,
   latestBrew: Brew
 ): boolean => {
-  const currentDateTime = new Date();
+  const currentDateTime = Date.now();
   const latestBrewDateTime = latestBrew.dateTime;
   return (
-    (currentDateTime.getTime() - latestBrewDateTime.getTime()) / 1000 <
-    throttleSeconds
+    (currentDateTime - latestBrewDateTime.getTime()) / 1000 < throttleSeconds
   );
 };
 
 export const brewStartedSinceMs = (brew: Brew) => {
-  const currentDateTime = new Date();
-  const latestBrewDateTime = new Date(brew.dateTime);
-  return currentDateTime.getTime() - latestBrewDateTime.getTime();
+  const currentDateTime = Date.now();
+  const latestBrewDateTime = Date.parse(brew.dateTime);
+  return currentDateTime - latestBrewDateTime;
 };
