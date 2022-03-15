@@ -14,7 +14,10 @@ const BREW_THRESHOLD_SECONDS =
 export const useCreateBrew = () => {
   const queryClient = useQueryClient();
   return useMutation(() => createBrew(), {
-    onSuccess: () => {
+    onSuccess: (result: Brew | null) => {
+      if (result) {
+        queryClient.setQueryData("brews", (brews: any) => [...brews, result]);
+      }
       queryClient.invalidateQueries("brews");
     },
   });
