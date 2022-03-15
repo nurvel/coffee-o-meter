@@ -21,6 +21,12 @@ const useStyles = createStyles((theme, _params) => {
   return {
     app: {
       textAlign: "center",
+      height: "100vh",
+    },
+    header: {
+      position: "absolute",
+      margin: "5px",
+      right: "0",
     },
     mascotImage: {
       border: 0,
@@ -28,7 +34,7 @@ const useStyles = createStyles((theme, _params) => {
       maxWidth: "340px",
       height: "auto",
       margin: "auto",
-      marginTop: "50px",
+      paddingTop: "100px",
     },
     title: {
       margin: "5px",
@@ -42,6 +48,13 @@ const useStyles = createStyles((theme, _params) => {
     button: {
       margin: "20px 20px 10px 20px",
     },
+    // footer: {
+    //   position: "fixed",
+    //   left: "50%",
+    //   bottom: "5px",
+    //   transform: "translate(-50%, -50%)",
+    //   margin: "0 auto"
+    // },
   };
 });
 
@@ -72,6 +85,21 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Container className={myStyles.header}>
+        <Text
+          component="a"
+          href="https://github.com/nurvel/coffee-o-meter/releases"
+          target="_blank"
+          variant="gradient"
+          gradient={{ from: "orange", to: "pink", deg: 45 }}
+          size="md"
+          weight={700}
+          style={{ fontFamily: "Greycliff CF, sans-serif" }}
+        >
+          coffee-o-meter
+        </Text>
+      </Container>
+
       <div className={myStyles.mascotImage}>
         <Image alt="Coffee mascot" src={coffeeMascotImg} priority={true} />
       </div>
