@@ -3,12 +3,12 @@ import { useLatestBrew } from "./brewHooks";
 
 export const useExplode = () => {
   const [isThrottle] = useLatestBrew();
-  const [isExplode, setIsExplode] = useState(false);
+  const [isExplode, setIsExplode] = useState<boolean>(false);
 
   if (isExplode) {
     setTimeout(() => {
       setIsExplode(false);
-    }, 10000);
+    }, 5000);
   }
 
   useEffect(() => {
