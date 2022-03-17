@@ -1,21 +1,15 @@
 import type { GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import {
-  Button,
-  Text,
-  Container,
-  Title,
-  createStyles,
-  Progress,
-  Blockquote,
-} from "@mantine/core";
+import { Text, Container, createStyles } from "@mantine/core";
 import { DehydratedState, QueryClient } from "react-query";
 import { dehydrate } from "react-query/hydration";
 
 import { fetchBrewsServerSide } from "./api/v1/brews";
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
-import { useCreateBrew, useLatestBrew } from "../components/hooks/brewHooks";
+import { CoffeeContent } from "../components/CoffeeContent";
+import Confetti from "../components//Confetti";
+import { useExplode } from "../components/hooks/useConfetti";
 
 const useStyles = createStyles((theme, _params) => {
   return {
@@ -64,12 +58,7 @@ interface Props {
 
 const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
   const myStyles = useStyles().classes;
-  const createBrewHook = useCreateBrew();
-  const [isThrottle, lastBrew, throttlePercentage] = useLatestBrew();
-
-  const handleClick = () => {
-    createBrewHook.mutate();
-  };
+  const isExplode = useExplode();
 
   // console.log("NODE_ENV", process.env.NODE_ENV);
   // console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
@@ -103,48 +92,8 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
       <div className={myStyles.mascotImage}>
         <Image alt="Coffee mascot" src={coffeeMascotImg} priority={true} />
       </div>
-      <Container>
-        {isThrottle ? (
-          <>
-            <Title className={myStyles.title}>Coffee is on the way!</Title>
-            <Progress
-              value={Number.parseInt(throttlePercentage)}
-              label={`${throttlePercentage} %`}
-              size="xl"
-              radius="xl"
-              animate
-              color="orange"
-              className={myStyles.progressBar}
-            />
-            <br />
-            <Blockquote color="orange" cite="– Random Fact API">
-              {lastBrew.fact}
-            </Blockquote>
-          </>
-        ) : (
-          <>
-            <Title className={myStyles.title}>Did you make coffee?</Title>
-            <Text className={myStyles.ingress}>
-              Brilliant! Let your colleagues know about it in Slack channel{" "}
-              <b>#coffee-o-meter</b>. Just press the button below.
-            </Text>
-
-            <Button
-              className={myStyles.button}
-              mx={20}
-              size="xl"
-              color="orange"
-              radius="md"
-              onClick={() => {
-                handleClick();
-              }}
-              loading={createBrewHook.isLoading}
-            >
-              Yes, I made coffee
-            </Button>
-          </>
-        )}
-      </Container>
+      <CoffeeContent />
+      <Confetti isExplode={isExplode} />
     </Container>
   );
 };
