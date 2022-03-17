@@ -42,6 +42,12 @@ const useStyles = createStyles((theme, _params) => {
     button: {
       margin: "20px 20px 10px 20px",
     },
+    confetti: {
+      position: "fixed",
+      left: "50%",
+      marginTop: "50px",
+      zIndex: "1000",
+    },
     // footer: {
     //   position: "fixed",
     //   left: "50%",
@@ -92,8 +98,10 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
       <div className={myStyles.mascotImage}>
         <Image alt="Coffee mascot" src={coffeeMascotImg} priority={true} />
       </div>
+      <div className={myStyles.confetti}>
+        <Confetti isExplode={isExplode} />
+      </div>
       <CoffeeContent />
-      <Confetti isExplode={isExplode} />
     </Container>
   );
 };
