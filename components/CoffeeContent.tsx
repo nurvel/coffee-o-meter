@@ -1,3 +1,4 @@
+import { FunctionComponent } from "react";
 import {
   Button,
   Text,
@@ -7,7 +8,6 @@ import {
   Blockquote,
   createStyles,
 } from "@mantine/core";
-import { FunctionComponent } from "react";
 
 import { useCreateBrew, useLatestBrew } from "./hooks/brewHooks";
 

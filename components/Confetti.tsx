@@ -1,6 +1,5 @@
+import React, { FunctionComponent } from "react";
 import { Container } from "@mantine/core";
-import React from "react";
-import { FunctionComponent } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
 
 interface Props {
