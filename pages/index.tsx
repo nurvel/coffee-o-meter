@@ -1,4 +1,5 @@
-import type { GetServerSidePropsContext, NextPage } from "next";
+import React from "react";
+import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { Text, Container, createStyles } from "@mantine/core";
@@ -11,7 +12,7 @@ import { CoffeeContent } from "../components/CoffeeContent";
 import Confetti from "../components//Confetti";
 import { useExplode } from "../components/hooks/useConfetti";
 
-const useStyles = createStyles((theme, _params) => {
+const useStyles = createStyles(() => {
   return {
     app: {
       textAlign: "center",
@@ -62,7 +63,7 @@ interface Props {
   dehydratedState: DehydratedState;
 }
 
-const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
+const Home: NextPage<Props> = () => {
   const myStyles = useStyles().classes;
   const isExplode = useExplode();
 
@@ -108,7 +109,7 @@ const Home: NextPage<Props> = ({ dehydratedState }: Props) => {
 
 export default Home;
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export async function getServerSideProps() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery("brews", fetchBrewsServerSide);
   console.log("GET brews: server");

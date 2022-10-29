@@ -17,7 +17,10 @@ export const useCreateBrew = () => {
   return useMutation(() => createBrew(), {
     onSuccess: (result: Brew | null) => {
       if (result) {
-        queryClient.setQueryData("brews", (brews: any) => [...brews, result]);
+        queryClient.setQueryData("brews", (brews: Brew[] = []) => [
+          ...brews,
+          result,
+        ]);
       }
       queryClient.invalidateQueries("brews");
     },

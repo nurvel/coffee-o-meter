@@ -54,10 +54,10 @@ components:
           type: string
           format: uuid
         dateTime:
-# typescript type converter has a know issued with using TS Date type for date-time format.
-# using type: Date  generates the right kind of interface, but has a invalid reference to custom Date
-# still solution seems to work (?)
-# https://github.com/ferdikoomen/openapi-typescript-codegen/issues/396
+          # typescript type converter has a know issued with using TS Date type for date-time format.
+          # using type: Date  generates the right kind of interface, but has a invalid reference to custom Date
+          # still solution seems to work (?)
+          # https://github.com/ferdikoomen/openapi-typescript-codegen/issues/396
           type: Date
           format: date-tine
           example: "2021-01-30T08:30:00Z"

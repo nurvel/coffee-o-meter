@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 import {
   Button,
   Text,
@@ -11,7 +11,7 @@ import {
 
 import { useCreateBrew, useLatestBrew } from "./hooks/brewHooks";
 
-const useStyles = createStyles((theme, _params) => {
+const useStyles = createStyles(() => {
   return {
     title: {
       margin: "5px",

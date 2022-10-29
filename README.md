@@ -14,7 +14,7 @@ A App for getting your colleges informed that you made coffee.
 
 ## Getting Started
 
-Init & run local environment 
+Init & run local environment
 
 ```
 npm install             # install dependencies
