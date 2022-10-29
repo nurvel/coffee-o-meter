@@ -6,6 +6,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --check --ignore-path .gitignore .",
+    "format:fix": "prettier --write --ignore-path .gitignore .",
     "generate": "openapi --input ./common/api/coffee-o-meter-openapi.yaml --output common/api/generated --name BrewService",
     "db-init:local": "docker run --name coffee-o-meter -p 5432:5432 -e POSTGRES_PASSWORD=mypassword -e POSTGRES_USER=postgres -d postgres",
     "db-run:local": "docker start coffee-o-meter",
@@ -31,6 +33,7 @@
     "eslint": "8.8.0",
     "eslint-config-next": "12.0.10",
     "openapi-typescript-codegen": "^0.18.2",
+    "prettier": "^2.7.1",
     "prisma": "^3.9.2",
     "swagger-ts-generator": "^2.0.6",
     "typescript": "4.5.5"
