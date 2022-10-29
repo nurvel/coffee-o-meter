@@ -19,7 +19,7 @@ export const useExplode = () => {
       setIsExplode(isThrottle);
       cleanUpAfterConfettiIsFinished();
     }
-  }, [isThrottle]);
+  }, [isThrottle, latestBrew]);
 
   return isExplode;
 };
