@@ -1,5 +1,5 @@
-import { useWindowSize } from "usehooks-ts";
+import { useViewportSize as vpSize } from "@mantine/hooks";
 
 export const useViewportSize = () => {
-  return useWindowSize();
+  return vpSize();
 };
