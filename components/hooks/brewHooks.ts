@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { createBrew, getBrews } from "../../common/api/uiApiUtils";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { Brew } from "../../common/api/generated";
-import { brewStartedSinceMs, getLatestBrew } from "../../common/utils";
+import { brewStartedSinceMs, getLatestBrew } from "../../common/utilsApi";
 
 // TODO: This is not also in API routes /brew. Remove duplication
 const DEFAULT_BREW_THRESHOLD_MINUTES = 5;
