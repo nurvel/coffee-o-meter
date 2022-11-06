@@ -63,12 +63,7 @@ components:
           example: "2021-01-30T08:30:00Z"
         fact:
           type: string
-        potSize:
-          $ref: "#/components/schemas/PotSize"
     Brews:
       type: array
       items:
         $ref: "#/components/schemas/Brew"
-    PotSize:
-      type: string
-      enum: ["FULL", "HALF"]
