@@ -1,11 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ApiError } from "next/dist/server/api-utils";
-import { Brew } from "../../../common/api/generated/models/Brew";
-import { createBrew, getAllBrews, getLatestBrew } from "./_brewService";
-import { postToSlackChannel } from "./_slackService";
-import { isThrottleBrew } from "../../../common/utils";
-import { getRandomFact } from "./_factService";
+import { createBrew, getAllBrews, getLatestBrew } from "../_brewService";
+import { postToSlackChannel } from "../_slackService";
+import { isThrottleBrew } from "../../../../common/utilsApi";
+import { getRandomFact } from "../_factService";
+import { Brew } from "@prisma/client";
 
 const DEFAULT_BREW_THRESHOLD_MINUTES = 5;
 const BREW_THRESHOLD_SECONDS =
@@ -32,7 +32,7 @@ export default async function handler(
       console.log("POST /brews");
       try {
         const latestBrew = await getLatestBrew();
-        if (isThrottleBrew(BREW_THRESHOLD_SECONDS, latestBrew)) {
+        if (latestBrew && isThrottleBrew(BREW_THRESHOLD_SECONDS, latestBrew)) {
           return res
             .status(425)
             .json(new ApiError(425, "Too early for a new brew!"));

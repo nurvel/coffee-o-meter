@@ -2,7 +2,7 @@ import { Brew, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const getLatestBrew = async () => {
+export const getLatestBrew = async (): Promise<Brew | null> => {
   return prisma.brew.findFirst({
     orderBy: {
       dateTime: "desc",
