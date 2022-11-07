@@ -32,7 +32,7 @@ export const CoffeeContent: FunctionComponent = () => {
   const myStyles = useStyles().classes;
 
   const mutation = useCreateBrew();
-  const [isThrottle, lastBrew, throttlePercentage] = useLatestBrew();
+  const { isThrottle, latestBrew, throttlePercentage } = useLatestBrew();
 
   const handleClick = () => {
     mutation.mutate();
@@ -40,7 +40,7 @@ export const CoffeeContent: FunctionComponent = () => {
 
   return (
     <Container>
-      {isThrottle ? (
+      {isThrottle && latestBrew ? (
         <>
           <Title className={myStyles.title}>Coffee is on the way!</Title>
           <Progress
@@ -54,7 +54,7 @@ export const CoffeeContent: FunctionComponent = () => {
           />
           <br />
           <Blockquote color="orange" cite="– Random Fact API">
-            {lastBrew.fact}
+            {latestBrew.fact}
           </Blockquote>
         </>
       ) : (
