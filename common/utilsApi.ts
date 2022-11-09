@@ -15,15 +15,22 @@ export const isThrottleBrew = (
   latestBrew: Brew
 ): boolean => {
   const currentDateTime = Date.now();
-  const latestBrewDateTime = latestBrew.dateTime;
-  return (
-    (currentDateTime - latestBrewDateTime.getTime()) / 1000 < throttleSeconds
-  );
+  const latestBrewDateTime = new Date(latestBrew.dateTime).getTime();
+  return (currentDateTime - latestBrewDateTime) / 1000 < throttleSeconds;
 };
 
 export const getThrottle = (brew: Brew | null | undefined): number => {
-  if (brew === null || brew === undefined) return 0;
+  // console.log("args:", brew);
+  if (!brew) return 0;
   const currentDateTime = Date.now();
   const latestBrewDateTime = new Date(brew.dateTime).getTime(); // TODO: miksi API ei palauta toimivassa Date muodossa jos prisman Brew objekti?
-  return BREW_THRESHOLD_SECONDS - currentDateTime - latestBrewDateTime;
+  // console.log("-----");
+  // console.log("currentDateTime", currentDateTime);
+  // console.log("latestBrewDateTime", latestBrewDateTime);
+  // console.log("calc", currentDateTime - latestBrewDateTime);
+  // console.log("BREW_THRESHOLD_SECONDS", BREW_THRESHOLD_SECONDS);
+  const throttle =
+    BREW_THRESHOLD_SECONDS - (currentDateTime - latestBrewDateTime);
+  // console.log("throttle", throttle);
+  return throttle < 0 ? 0 : throttle;
 };

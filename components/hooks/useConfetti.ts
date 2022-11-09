@@ -15,6 +15,7 @@ export const useExplode = () => {
   useEffect(() => {
     const sinceStartMs = getThrottle(latestBrew); // brewStartedSinceMs
 
+    console.log("Hello from useFonfetti")
     if (sinceStartMs < 1000) {
       setIsExplode(isThrottle);
       cleanUpAfterConfettiIsFinished();
