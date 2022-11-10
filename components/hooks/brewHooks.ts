@@ -45,34 +45,47 @@ interface UseLatestBrewResult {
   throttlePercentage: string;
 }
 
+let counterId = 0;
+
 export const useLatestBrew = (): UseLatestBrewResult => {
   const latestBrew = useGetLatestBrew();
-  const [throttleMs, setThrottleMs] = React.useState<number>(
-    getThrottle(latestBrew.data)
+  const [throttleMs, setThrottleMs] = React.useState(0);
+
+  console.log(
+    "calling hook: useLatestBrew",
+    throttleMs,
+    getThrottle(latestBrew.data),
+    latestBrew,
+    latestBrew.data?.id
   );
-  const [ct, setCt] = React.useState<boolean>(false);
-  // const [isThrottle, setIsThrottle] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    setThrottleMs(getThrottle(latestBrew.data));
-  }, [latestBrew]);
+    console.log("setting latest brew");
+    const tr = getThrottle(latestBrew.data);
+    setThrottleMs(tr);
 
-  React.useEffect(() => {
-    function refreshThrottle() {
-      console.log("setThrottle");
-      setThrottleMs((cur) => cur - new Date().getTime());
-    }
+    if (tr > 0) {
+      counterId++;
+      const timer = setInterval(() => {
+        setThrottleMs((cur: number): number => {
+          console.log(`interval: counterID ${counterId} CurrentCount:${cur}`);
+          return cur - 1000;
+        });
+      }, 1000);
 
-    if (!ct && throttleMs > 0) {
-      setCt(true);
-      const id = setInterval(refreshThrottle, 100);
+      setTimeout(() => {
+        console.log("clear interval: timeout");
+        setThrottleMs(0);
+        clearInterval(timer);
+      }, tr);
+
       return () => {
-        console.log("clear interval");
-        clearInterval(id);
-        setCt(false);
+        console.log("clear interval: unmount");
+        setThrottleMs(0);
+        clearInterval(timer);
       };
     }
-  }, [throttleMs, ct]);
+  }, [latestBrew.data]);
 
   return {
     isThrottle: throttleMs > 0,
@@ -81,8 +94,52 @@ export const useLatestBrew = (): UseLatestBrewResult => {
   };
 };
 
+// export const useLatestBrew = (): UseLatestBrewResult => {
+//   const latestBrew = useGetLatestBrew();
+//   const [throttleMs, setThrottleMs] = React.useState<number>(0);
+//   // const [isThrottle, setIsThrottle] = React.useState<boolean>(false);
+
+//   console.log(
+//     "calling hook: useLatestBrew",
+//     throttleMs,
+//     latestBrew,
+//     latestBrew.data?.id
+//   );
+
+//   // React.useEffect(() => {
+//   //   // console.log("setThrottleMs(getThrottle(latestBrew.data)); ");
+//   //   setThrottleMs(getThrottle(latestBrew.data));
+//   // }, [latestBrew]);
+
+//   React.useCallback(() => {
+//     counterId++;
+
+//     console.log("useCallBack called");
+//     setThrottleMs(getThrottle(latestBrew.data));
+
+//     const id = setInterval(() => {
+//       console.log(`interval: counterID ${counterId}`);
+//       setThrottleMs((cur) => (cur > 0 ? cur - 1000 : 0));
+//     }, 1000);
+
+//     return () => {
+//       console.log("clear interval");
+//       clearInterval(id);
+//     };
+//   }, [latestBrew]);
+
+//   return {
+//     isThrottle: throttleMs > 0,
+//     latestBrew: latestBrew.data,
+//     throttlePercentage: convertToPercentages(throttleMs),
+//   };
+// };
+
 const convertToPercentages = (nr: number): string => {
   const percentage: number =
     ((BREW_THRESHOLD_SECONDS - nr) / BREW_THRESHOLD_SECONDS) * 100;
-  return parseFloat(percentage.toString()).toFixed();
+  console.log(
+    `${BREW_THRESHOLD_SECONDS} - ${nr} / ${BREW_THRESHOLD_SECONDS} = ${percentage}`
+  );
+  return percentage === 100 ? "0" : parseFloat(percentage.toString()).toFixed();
 };

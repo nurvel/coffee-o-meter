@@ -38,6 +38,8 @@ export const CoffeeContent: FunctionComponent = () => {
     mutation.mutate();
   };
 
+  console.log(`Coffee Content: throttle% ${throttlePercentage}`);
+
   return (
     <Container>
       {isThrottle && latestBrew ? (
