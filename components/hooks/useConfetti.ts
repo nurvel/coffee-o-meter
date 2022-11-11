@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { getThrottle } from "../../common/utilsApi";
 import { useLatestBrew } from "./brewHooks";
 
 export const useExplode = () => {
-  const { isThrottle, latestBrew } = useLatestBrew();
+  const { isThrottle, throttlePercentage } = useLatestBrew();
   const [isExplode, setIsExplode] = useState<boolean>(false);
 
   const cleanUpAfterConfettiIsFinished = () => {
@@ -13,14 +12,15 @@ export const useExplode = () => {
   };
 
   useEffect(() => {
-    const sinceStartMs = getThrottle(latestBrew); // brewStartedSinceMs
-
-    console.log("Hello from useFonfetti")
-    if (sinceStartMs < 1000) {
-      setIsExplode(isThrottle);
+    if (isThrottle && coffeeJustStarted(throttlePercentage)) {
+      setIsExplode(true);
       cleanUpAfterConfettiIsFinished();
     }
-  }, [isThrottle, latestBrew]);
+  }, [isThrottle, throttlePercentage]);
 
   return isExplode;
+};
+
+const coffeeJustStarted = (throttlePercentage: string): boolean => {
+  return Number.parseInt(throttlePercentage) < 10;
 };

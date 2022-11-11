@@ -65,7 +65,7 @@ interface Props {
 
 const Home: NextPage<Props> = () => {
   const myStyles = useStyles().classes;
-  // const isExplode = useExplode();
+  const isExplode = useExplode();
 
   // console.log("NODE_ENV", process.env.NODE_ENV);
   // console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
@@ -100,7 +100,7 @@ const Home: NextPage<Props> = () => {
         <Image alt="Coffee mascot" src={coffeeMascotImg} priority={true} />
       </div>
       <div className={myStyles.confetti}>
-        {/* <Confetti isExplode={isExplode} /> */}
+        <Confetti isExplode={isExplode} />
       </div>
       <CoffeeContent />
     </Container>
