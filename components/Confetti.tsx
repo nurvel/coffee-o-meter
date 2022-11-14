@@ -8,7 +8,6 @@ interface Props {
 }
 
 const Confetti: FunctionComponent<Props> = ({ isExplode }: Props) => {
-  //console.log("render: ConfettiExplosion", isExplode);
   const { height } = useViewportSize();
 
   return (

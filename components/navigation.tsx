@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { navigationOptions } from "../common/utils";
+import { navigationOptions } from "../common/utilsApi";
 
 export default function Navigation() {
   const router = useRouter();

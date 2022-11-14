@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
-
-import { createBrew, getBrews } from "../../common/api/uiApiUtils";
+import {
+  createBrew,
+  getBrews,
+  getLatestBrew,
+} from "../../common/api/uiApiUtils";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { Brew } from "../../common/api/generated";
-import { brewStartedSinceMs, getLatestBrew } from "../../common/utils";
+import { getThrottle } from "../../common/utilsApi";
+import React from "react";
 
 // TODO: This is not also in API routes /brew. Remove duplication
 const DEFAULT_BREW_THRESHOLD_MINUTES = 5;
@@ -23,6 +26,7 @@ export const useCreateBrew = () => {
         ]);
       }
       queryClient.invalidateQueries("brews");
+      queryClient.invalidateQueries("latest_brew");
     },
   });
 };
@@ -31,34 +35,54 @@ export const useGetBrews = () => {
   return useQuery<Brew[]>("brews", getBrews);
 };
 
-export const useLatestBrew = (): [boolean, Brew, string, number] => {
-  const getBrewsHook = useGetBrews();
-  const latestBrew: Brew = getLatestBrew(getBrewsHook.data); // TODO: API endpoint for latest brew
-  const [throttleMs, setThrottleMs] = useState(
-    BREW_THRESHOLD_SECONDS - brewStartedSinceMs(latestBrew)
-  );
+export const useGetLatestBrew = () => {
+  return useQuery<Brew | null>("latest_brew", getLatestBrew);
+};
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (throttleMs > 0) {
-        setThrottleMs((current) => current - 100);
-      }
-    }, 100);
-    return () => clearInterval(interval);
-  }, [latestBrew, throttleMs]);
+interface UseLatestBrewResult {
+  isThrottle: boolean;
+  latestBrew: Brew | null | undefined;
+  throttlePercentage: string;
+}
 
-  useEffect(() => {
-    setThrottleMs(BREW_THRESHOLD_SECONDS - brewStartedSinceMs(latestBrew));
-  }, [latestBrew]);
+export const useLatestBrew = (): UseLatestBrewResult => {
+  const latestBrew = useGetLatestBrew();
+  const [throttleMs, setThrottleMs] = React.useState(0);
 
-  const isThrottle = throttleMs > 0;
-  const throttlePercentage: number =
-    ((BREW_THRESHOLD_SECONDS - throttleMs) / BREW_THRESHOLD_SECONDS) * 100;
+  React.useEffect(() => {
+    const tr = getThrottle(latestBrew.data);
+    setThrottleMs(tr);
 
-  return [
-    isThrottle,
-    latestBrew,
-    parseFloat(throttlePercentage.toString()).toFixed(),
-    throttleMs,
-  ];
+    if (tr > 0) {
+      const UPDATE_INTERVAL = 500;
+
+      const timer = setInterval(() => {
+        setThrottleMs((cur: number): number => {
+          return cur - UPDATE_INTERVAL;
+        });
+      }, UPDATE_INTERVAL);
+
+      setTimeout(() => {
+        setThrottleMs(0);
+        clearInterval(timer);
+      }, tr);
+
+      return () => {
+        setThrottleMs(0);
+        clearInterval(timer);
+      };
+    }
+  }, [latestBrew.data]);
+
+  return {
+    isThrottle: throttleMs > 0,
+    latestBrew: latestBrew.data,
+    throttlePercentage: convertToPercentages(throttleMs),
+  };
+};
+
+const convertToPercentages = (nr: number): string => {
+  const percentage: number =
+    ((BREW_THRESHOLD_SECONDS - nr) / BREW_THRESHOLD_SECONDS) * 100;
+  return nr === 0 ? "0" : parseFloat(percentage.toString()).toFixed();
 };

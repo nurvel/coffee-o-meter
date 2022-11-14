@@ -26,7 +26,7 @@ export const getBrews = async (): Promise<Brew[]> => {
     });
 };
 
-export const getLatestBrews = async (): Promise<Brew | null> => {
+export const getLatestBrew = async (): Promise<Brew | null> => {
   return client
     .findLatestBrew()
     .then((brew: Brew) => {

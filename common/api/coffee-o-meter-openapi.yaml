@@ -30,18 +30,20 @@ paths:
       #     application/json:
       #       schema:
       #         $ref: "#/components/schemas/Brew"
-  /v1/brews/last:
+  /v1/brews/latest:
     get:
       summary: Returns latest brew
       description: Returns information of the latest brew.
       operationId: "findLatestBrew"
       responses:
         200:
-          description: A JSON array of all coffee brews.
+          description: A JSON object of the latest brew.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Brew"
+        204:
+          description: No latest brew found
 components:
   schemas:
     Brew:
@@ -49,6 +51,7 @@ components:
       required:
         - id
         - dateTime
+        - fact
       properties:
         id:
           type: string
@@ -63,12 +66,7 @@ components:
           example: "2021-01-30T08:30:00Z"
         fact:
           type: string
-        potSize:
-          $ref: "#/components/schemas/PotSize"
     Brews:
       type: array
       items:
         $ref: "#/components/schemas/Brew"
-    PotSize:
-      type: string
-      enum: ["FULL", "HALF"]
