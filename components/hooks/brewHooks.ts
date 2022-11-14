@@ -45,44 +45,29 @@ interface UseLatestBrewResult {
   throttlePercentage: string;
 }
 
-let counterId = 0;
-
 export const useLatestBrew = (): UseLatestBrewResult => {
   const latestBrew = useGetLatestBrew();
   const [throttleMs, setThrottleMs] = React.useState(0);
 
-  // console.log(
-  //   "calling hook: useLatestBrew",
-  //   throttleMs,
-  //   getThrottle(latestBrew.data),
-  //   latestBrew,
-  //   latestBrew.data?.id
-  // );
-
   React.useEffect(() => {
-    console.log("setting latest brew");
     const tr = getThrottle(latestBrew.data);
     setThrottleMs(tr);
 
     if (tr > 0) {
-      counterId++;
-      const UPDATE_INTERVAL = 1000;
+      const UPDATE_INTERVAL = 500;
 
       const timer = setInterval(() => {
         setThrottleMs((cur: number): number => {
-          console.log(`interval: counterID ${counterId} CurrentCount:${cur}`);
           return cur - UPDATE_INTERVAL;
         });
       }, UPDATE_INTERVAL);
 
       setTimeout(() => {
-        console.log("clear interval: timeout");
         setThrottleMs(0);
         clearInterval(timer);
       }, tr);
 
       return () => {
-        console.log("clear interval: unmount");
         setThrottleMs(0);
         clearInterval(timer);
       };

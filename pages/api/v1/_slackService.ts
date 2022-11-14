@@ -1,5 +1,5 @@
 export const postToSlackChannel = async (
-  message: string
+  message: string | null
 ): Promise<Response> => {
   const URL = "https://slack.com/api/chat.postMessage";
 
