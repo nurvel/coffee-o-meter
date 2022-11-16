@@ -23,13 +23,17 @@ const useStyles = createStyles(() => {
       margin: "5px",
       right: "0",
     },
-    mascotImage: {
+    mascotImageContainer: {
       border: 0,
       padding: "30px",
       maxWidth: "340px",
       height: "auto",
       margin: "auto",
       paddingTop: "100px",
+    },
+    mascotImage: {
+      maxWidth: "300px",
+      height: "auto",
     },
     title: {
       margin: "5px",
@@ -43,12 +47,12 @@ const useStyles = createStyles(() => {
     button: {
       margin: "20px 20px 10px 20px",
     },
-    confetti: {
-      position: "fixed",
-      left: "50%",
-      marginTop: "50px",
-      zIndex: "1000",
-    },
+    // confetti: {
+    //   position: "fixed",
+    //   left: "50%",
+    //   marginTop: "50px",
+    //   zIndex: "1000",
+    // },
     // footer: {
     //   position: "fixed",
     //   left: "50%",
@@ -96,12 +100,20 @@ const Home: NextPage<Props> = () => {
         </Text>
       </Container>
 
-      <div className={myStyles.mascotImage}>
-        <Image alt="Coffee mascot" src={coffeeMascotImg} priority={true} />
+      <div className={myStyles.mascotImageContainer}>
+        <Image
+          alt="Coffee mascot"
+          src={coffeeMascotImg}
+          priority={true}
+          style={{
+            maxWidth: "300px",
+            height: "auto",
+          }}
+        />
       </div>
-      <div className={myStyles.confetti}>
+      {/* <div className={myStyles.confetti}>
         <Confetti isExplode={isExplode} />
-      </div>
+      </div> */}
       <CoffeeContent />
     </Container>
   );
