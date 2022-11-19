@@ -11,11 +11,11 @@ const BREW_THRESHOLD_SECONDS =
 
 export const isThrottleBrew = (
   throttleSeconds: number,
-  latestBrew: Brew
+  latestBrew: Brew,
+  dateNow: number
 ): boolean => {
-  const currentDateTime = Date.now();
   const latestBrewDateTime = new Date(latestBrew.dateTime).getTime();
-  return (currentDateTime - latestBrewDateTime) / 1000 < throttleSeconds;
+  return (dateNow - latestBrewDateTime) / 1000 < throttleSeconds;
 };
 
 export const getThrottle = (brew: Brew | null | undefined): number => {

@@ -32,7 +32,10 @@ export default async function handler(
       console.log("POST /brews");
       try {
         const latestBrew = await getLatestBrew();
-        if (latestBrew && isThrottleBrew(BREW_THRESHOLD_SECONDS, latestBrew)) {
+        if (
+          latestBrew &&
+          isThrottleBrew(BREW_THRESHOLD_SECONDS, latestBrew, Date.now())
+        ) {
           return res
             .status(425)
             .json(new ApiError(425, "Too early for a new brew!"));
