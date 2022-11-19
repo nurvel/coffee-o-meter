@@ -11,6 +11,7 @@ interface Props {
 const Confetti: FunctionComponent<Props> = ({ isThrottle }: Props) => {
   const { height, width } = useViewportSize();
 
+  console.log(`Confetti: isThrottle: ${isThrottle}`);
   const confettiProps = {
     width,
     height,
@@ -34,5 +35,8 @@ const Confetti: FunctionComponent<Props> = ({ isThrottle }: Props) => {
 };
 
 export default React.memo(Confetti, (prevProps, nextProps) => {
-  return prevProps.latestBrew?.id == nextProps.latestBrew?.id;
+  return (
+    prevProps.latestBrew?.id == nextProps.latestBrew?.id &&
+    prevProps.isThrottle == nextProps.isThrottle
+  );
 });
