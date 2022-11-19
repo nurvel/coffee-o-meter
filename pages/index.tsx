@@ -10,7 +10,7 @@ import { fetchBrewsServerSide } from "./api/v1/brews";
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
 import { CoffeeContent } from "../components/CoffeeContent";
 import Confetti from "../components//Confetti";
-import { useExplode } from "../components/hooks/useConfetti";
+import { useLatestBrew } from "../components/hooks/brewHooks";
 
 const useStyles = createStyles(() => {
   return {
@@ -63,7 +63,7 @@ interface Props {
 
 const Home: NextPage<Props> = () => {
   const myStyles = useStyles().classes;
-  const isExplode = useExplode();
+  const { latestBrew, isThrottle } = useLatestBrew();
 
   // console.log("NODE_ENV", process.env.NODE_ENV);
   // console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
@@ -105,7 +105,7 @@ const Home: NextPage<Props> = () => {
           }}
         />
       </div>
-      <Confetti isExplode={isExplode} />
+      <Confetti {...{ isThrottle, latestBrew }} />
       <CoffeeContent />
     </Container>
   );

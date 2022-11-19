@@ -41,7 +41,7 @@ export const useGetLatestBrew = () => {
 
 interface UseLatestBrewResult {
   isThrottle: boolean;
-  latestBrew: Brew | null | undefined;
+  latestBrew: Brew | null;
   throttlePercentage: string;
 }
 
@@ -76,7 +76,7 @@ export const useLatestBrew = (): UseLatestBrewResult => {
 
   return {
     isThrottle: throttleMs > 0,
-    latestBrew: latestBrew.data,
+    latestBrew: latestBrew.data ?? null,
     throttlePercentage: convertToPercentages(throttleMs),
   };
 };

@@ -1,12 +1,14 @@
 import React, { FunctionComponent } from "react";
 import SizedConfetti from "react-confetti";
+import { Brew } from "../common/api/generated";
 import { useViewportSize } from "./hooks/useviewportSize";
 
 interface Props {
-  isExplode: boolean;
+  isThrottle: boolean;
+  latestBrew?: Brew | null;
 }
 
-const Confetti: FunctionComponent<Props> = ({ isExplode }: Props) => {
+const Confetti: FunctionComponent<Props> = ({ isThrottle }: Props) => {
   const { height, width } = useViewportSize();
 
   const confettiProps = {
@@ -18,7 +20,7 @@ const Confetti: FunctionComponent<Props> = ({ isExplode }: Props) => {
       x: width / 2,
       y: 500,
     },
-    run: isExplode,
+    run: isThrottle,
     recycle: false,
     friction: 1,
     tweenDuration: 10,
@@ -28,7 +30,9 @@ const Confetti: FunctionComponent<Props> = ({ isExplode }: Props) => {
     gravity: 0.3,
   };
 
-  return <>{isExplode && <SizedConfetti {...confettiProps} />}</>;
+  return <>{isThrottle && <SizedConfetti {...confettiProps} />}</>;
 };
 
-export default React.memo(Confetti);
+export default React.memo(Confetti, (prevProps, nextProps) => {
+  return prevProps.latestBrew?.id == nextProps.latestBrew?.id;
+});
