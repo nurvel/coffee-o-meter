@@ -9,8 +9,8 @@ import { dehydrate } from "react-query/hydration";
 import { fetchBrewsServerSide } from "./api/v1/brews";
 import coffeeMascotImg from "../public/coffee-mascot.jpeg";
 import { CoffeeContent } from "../components/CoffeeContent";
-import Confetti from "../components//Confetti";
-import { useExplode } from "../components/hooks/useConfetti";
+// import Confetti from "../components//Confetti";
+// import { useExplode } from "../components/hooks/useConfetti";
 
 const useStyles = createStyles(() => {
   return {
@@ -69,7 +69,7 @@ interface Props {
 
 const Home: NextPage<Props> = () => {
   const myStyles = useStyles().classes;
-  const isExplode = useExplode();
+  // const isExplode = useExplode();
 
   // console.log("NODE_ENV", process.env.NODE_ENV);
   // console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
