@@ -8,10 +8,10 @@ import { getRandomFact } from "../_factService";
 import { Brew } from "@prisma/client";
 
 const DEFAULT_BREW_THRESHOLD_MINUTES = 5;
-const BREW_THRESHOLD_SECONDS =
+const BREW_THRESHOLD_MILLISECONDS =
   process.env.NODE_ENV === "development"
-    ? 10
-    : DEFAULT_BREW_THRESHOLD_MINUTES * 60;
+    ? 10000
+    : DEFAULT_BREW_THRESHOLD_MINUTES * 60000;
 
 export default async function handler(
   req: NextApiRequest,
@@ -32,7 +32,10 @@ export default async function handler(
       console.log("POST /brews");
       try {
         const latestBrew = await getLatestBrew();
-        if (latestBrew && isThrottleBrew(BREW_THRESHOLD_SECONDS, latestBrew)) {
+        if (
+          latestBrew &&
+          isThrottleBrew(BREW_THRESHOLD_MILLISECONDS, latestBrew, Date.now())
+        ) {
           return res
             .status(425)
             .json(new ApiError(425, "Too early for a new brew!"));
