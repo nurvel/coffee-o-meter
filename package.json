@@ -6,6 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "jest",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
     "generate": "openapi --input ./common/api/coffee-o-meter-openapi.yaml --output common/api/generated --name BrewService",
@@ -33,6 +34,7 @@
     "react-query": "^3.34.16"
   },
   "devDependencies": {
+    "@jest/globals": "^29.3.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/node": "^18.11.9",
@@ -47,6 +49,7 @@
     "prettier": "^2.7.1",
     "prisma": "^4.6.1",
     "swagger-ts-generator": "^2.0.6",
+    "ts-jest": "^29.0.3",
     "typescript": "^4.9.3"
   }
 }
