@@ -11,7 +11,6 @@ interface Props {
 const Confetti: FunctionComponent<Props> = ({ isThrottle }: Props) => {
   const { height, width } = useViewportSize();
 
-  console.log(`Confetti: isThrottle: ${isThrottle}`);
   const confettiProps = {
     width,
     height,
