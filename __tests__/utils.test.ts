@@ -1,4 +1,4 @@
-import { isThrottleBrew } from "../common/utilsApi";
+import { getThrottle, isThrottleBrew } from "../common/utilsApi";
 import { Brew as PrismaBrew } from "@prisma/client";
 
 const brew: PrismaBrew = {
@@ -7,14 +7,24 @@ const brew: PrismaBrew = {
   fact: "This is a fact",
 };
 const dateNow: number = brew.dateTime.getTime() + 1000;
-const throttleSeconds = 1;
+const throttleMilliseconds = 1000;
 
-describe("Get throttle brew status", () => {
+describe("Get throttle brew boolean", () => {
   test("Throttle is active within one second", () => {
-    expect(isThrottleBrew(throttleSeconds, brew, dateNow)).toBe(false);
+    expect(isThrottleBrew(throttleMilliseconds, brew, dateNow)).toBe(false);
   });
 
   test("Throttle is not  active after one second", () => {
-    expect(isThrottleBrew(throttleSeconds + 1, brew, dateNow)).toBe(true);
+    expect(isThrottleBrew(throttleMilliseconds + 1, brew, dateNow)).toBe(true);
+  });
+});
+
+describe("Get throttle milliseconds", () => {
+  test("Last brew started 1 sec ago, with 10 sec throttle", () => {
+    expect(getThrottle(dateNow, throttleMilliseconds + 9000, brew)).toBe(9000);
+  });
+
+  test("No last brew, with 10 sec throttle", () => {
+    expect(getThrottle(dateNow, throttleMilliseconds + 9000)).toBe(0);
   });
 });

@@ -50,7 +50,7 @@ export const useLatestBrew = (): UseLatestBrewResult => {
   const [throttleMs, setThrottleMs] = React.useState(0);
 
   React.useEffect(() => {
-    const tr = getThrottle(latestBrew.data);
+    const tr = getThrottle(Date.now(), BREW_THRESHOLD_SECONDS, latestBrew.data);
     setThrottleMs(tr);
 
     if (tr > 0) {
