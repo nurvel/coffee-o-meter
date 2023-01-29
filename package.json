@@ -1,6 +1,13 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "turbo run dev --parallel"
-      }
+  "private": true,
+  "name": "coffee-o-meter",
+  "version": "1.0.0",
+  "workspaces": [
+    "docs",
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel"
   }
+}

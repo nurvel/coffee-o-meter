@@ -1,0 +1,10 @@
+
+> db-init:local
+> docker run --name coffee-o-meter -p 5432:5432 -e POSTGRES_PASSWORD=mypassword -e POSTGRES_USER=postgres -d postgres
+
+docker: Error response from daemon: Conflict. The container name "/coffee-o-meter" is already in use by container "60d67501139a6807ebeab39cce544b63908c6c296c684d206fdf40bb45609ec3". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+npm ERR! Lifecycle script `db-init:local` failed with error: 
+npm ERR! Error: command failed 
+npm ERR!   in workspace: @coffee-o-meter/web-app 
+npm ERR!   at location: /Users/nurvel/Documents/repos/nurvel/coffee-o-meter/apps/web-app 

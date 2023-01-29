@@ -1,0 +1,23 @@
+
+> migrate:local
+> dotenv -e .env.development.local -- npx prisma migrate dev
+
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "postgres", schema "public" at "localhost:5432"
+
+Applying migration `20221106192515_require_fact_in_brew`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20221106192515_require_fact_in_brew/
+    └─ migration.sql
+
+Your database is now in sync with your schema.
+
+Running generate... (Use --skip-generate to skip the generators)
+[2K[1A[2K[GRunning generate... - Prisma Client
+[2K[1A[2K[G✔ Generated Prisma Client (4.9.0 | library) to ./../../node_modules/@prisma/clie
+nt in 61ms
+
+

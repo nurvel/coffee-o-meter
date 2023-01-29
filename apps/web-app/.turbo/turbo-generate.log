@@ -1,0 +1,4 @@
+
+> generate
+> openapi --input ./common/api/coffee-o-meter-openapi.yaml --output common/api/generated --name BrewService
+

@@ -4,6 +4,20 @@
     "build": {
       "outputs": [".next/**"]
     },
+    "dev": {
+      "dependsOn": ["generate", "db-run:local", "migrate:local"],
+      "cache": false,
+      "persistent": true
+    },
+    "generate": {
+      "cache": true
+    },
+    "db-run:local": {
+      "cache": true
+    },
+    "migrate:local": {
+      "cache": true
+    },
     "lint": {}
   }
 }
