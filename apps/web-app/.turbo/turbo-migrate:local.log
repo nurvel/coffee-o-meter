@@ -1,23 +1,24 @@
 
 > migrate:local
-> dotenv -e .env.development.local -- npx prisma migrate dev
+> npx prisma migrate dev
 
 Prisma schema loaded from prisma/schema.prisma
-Datasource "db": PostgreSQL database "postgres", schema "public" at "localhost:5432"
+Datasource "db": PostgreSQL database
 
-Applying migration `20221106192515_require_fact_in_brew`
+Error: Prisma schema validation - (get-config wasm)
+Error code: P1012
+error: Environment variable not found: POSTGRES_URI.
+  -->  schema.prisma:9
+   | 
+ 8 | datasource db {
+ 9 |   url      = env("POSTGRES_URI")
+   | 
 
-The following migration(s) have been applied:
+Validation Error Count: 1
+[Context: getConfig]
 
-migrations/
-  └─ 20221106192515_require_fact_in_brew/
-    └─ migration.sql
-
-Your database is now in sync with your schema.
-
-Running generate... (Use --skip-generate to skip the generators)
-[2K[1A[2K[GRunning generate... - Prisma Client
-[2K[1A[2K[G✔ Generated Prisma Client (4.9.0 | library) to ./../../node_modules/@prisma/clie
-nt in 61ms
-
-
+Prisma CLI Version : 4.9.0
+npm ERR! Lifecycle script `migrate:local` failed with error: 
+npm ERR! Error: command failed 
+npm ERR!   in workspace: @coffee-o-meter/web-app 
+npm ERR!   at location: /Users/nurvel/Documents/repos/nurvel/coffee-o-meter/apps/web-app 

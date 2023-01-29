@@ -8,6 +8,9 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo run dev --parallel"
+    "dev": "dotenv -e .env.development.local -- turbo run dev"
+  },
+  "dependencies": {
+    "dotenv-cli": "^7.0.0"
   }
 }

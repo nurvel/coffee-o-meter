@@ -1,0 +1,17 @@
+{
+  "name": "@coffee-o-meter/database",
+  "scripts": {
+    "db:prisma-studio": "npx prisma studio",
+    "db:migrate:local": "npx prisma migrate dev",
+    "db:migrate:staging": "dotenv -e .env.staging -- npx prisma migrate deploy",
+    "db:generate": "npx prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.6.1"
+  },
+  "devDependencies": {
+    "prisma": "^4.6.1"
+  },
+  "main": "./index.ts",
+  "types": "./index.ts"
+}
