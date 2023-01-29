@@ -39,3 +39,6 @@ yarn-error.log*
 
 # generated code from openapi
 generated/
+
+# turborepo
++ .turbo

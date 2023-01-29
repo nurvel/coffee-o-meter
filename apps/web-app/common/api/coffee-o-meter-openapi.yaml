@@ -1,0 +1,72 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Coffee-o-meter API
+  license:
+    name: MIT
+paths:
+  /v1/brews:
+    get:
+      summary: Returns all coffee brews
+      description: Returns information of all the coffee made in history.
+      operationId: "findAllBrews"
+      responses:
+        200:
+          description: A JSON array of all coffee brews.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Brews"
+    post:
+      summary: Create a new brew
+      description: Saves a new brew entry to database
+      operationId: "addBrew"
+      responses:
+        201:
+          description: Created a new brew record
+      # requestBody:
+      #   required: true
+      #   content:
+      #     application/json:
+      #       schema:
+      #         $ref: "#/components/schemas/Brew"
+  /v1/brews/latest:
+    get:
+      summary: Returns latest brew
+      description: Returns information of the latest brew.
+      operationId: "findLatestBrew"
+      responses:
+        200:
+          description: A JSON object of the latest brew.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Brew"
+        204:
+          description: No latest brew found
+components:
+  schemas:
+    Brew:
+      type: object
+      required:
+        - id
+        - dateTime
+        - fact
+      properties:
+        id:
+          type: string
+          format: uuid
+        dateTime:
+          # typescript type converter has a know issued with using TS Date type for date-time format.
+          # using type: Date  generates the right kind of interface, but has a invalid reference to custom Date
+          # still solution seems to work (?)
+          # https://github.com/ferdikoomen/openapi-typescript-codegen/issues/396
+          type: Date
+          format: date-tine
+          example: "2021-01-30T08:30:00Z"
+        fact:
+          type: string
+    Brews:
+      type: array
+      items:
+        $ref: "#/components/schemas/Brew"
