@@ -9,9 +9,7 @@
     "test": "jest",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
-    "generate": "openapi --input ./common/api/coffee-o-meter-openapi.yaml --output common/api/generated --name BrewService",
-    "db-init:local": "docker run --name coffee-o-meter -p 5432:5432 -e POSTGRES_PASSWORD=mypassword -e POSTGRES_USER=postgres -d postgres",
-    "db-run:local": "docker start coffee-o-meter"
+    "generate": "openapi --input ./common/api/coffee-o-meter-openapi.yaml --output common/api/generated --name BrewService"
   },
   "dependencies": {
     "@coffee-o-meter/database": "*",

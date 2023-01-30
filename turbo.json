@@ -1,33 +1,28 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": ["**/.env.*local", ".env"],
+  "globalEnv": ["NODE_ENV"],
   "pipeline": {
     "build": {
-      "outputs": [".next/**"]
+      "outputs": ["dist/**", ".next/**"]
     },
     "dev": {
       "dependsOn": [
         "^generate",
-        "^db-run:local",
+        "^db:docker-run:local",
         "^db:generate",
         "^db:migrate:local"
       ],
-      "cache": false,
       "persistent": true
     },
-    "generate": {
-      "cache": true
+    "generate": {},
+    "db:docker-run:local": {
+      "dependsOn": ["^db:docker-init:local"]
     },
-    "db-run:local": {
-      "cache": true
-    },
-    "db:migrate:local": {
-      "cache": false,
-      "env": ["POSTGRES_URI"]
-    },
+    "db:docker-init:local": {},
+    "db:migrate:local": {},
     "db:generate": {
-      "cache": false,
-      "outputs": ["prisma db generated, nice"]
+      "dependsOn": ["^db:generate"]
     },
     "lint": {}
   }
