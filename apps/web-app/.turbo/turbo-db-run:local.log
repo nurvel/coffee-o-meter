@@ -1,5 +1,0 @@
-
-> db-run:local
-> docker start coffee-o-meter
-
-coffee-o-meter
