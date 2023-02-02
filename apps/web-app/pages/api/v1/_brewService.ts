@@ -1,4 +1,4 @@
-import { Brew, PrismaClient } from "@prisma/client";
+import { Brew, PrismaClient } from "@coffee-o-meter/database";
 
 const prisma = new PrismaClient();
 

@@ -1,5 +1,9 @@
-import { ApiError, Brew, BrewService } from "./generated";
-import { OpenAPIConfig } from "./generated/core/OpenAPI";
+import {
+  ApiError,
+  Brew,
+  BrewService,
+  OpenAPIConfig,
+} from "api";
 
 const openAPIConfig: OpenAPIConfig = {
   BASE: process.env.NEXT_PUBLIC_API_BASE_URL || "",

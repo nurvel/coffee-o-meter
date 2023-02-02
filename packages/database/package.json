@@ -1,0 +1,19 @@
+{
+  "name": "@coffee-o-meter/database",
+  "scripts": {
+    "db:prisma-studio": "npx prisma studio",
+    "db:migrate:local": "npx prisma migrate dev",
+    "db:migrate": "npx prisma migrate deploy",
+    "db:generate": "npx prisma generate",
+    "db:docker-init:local": "docker run --name coffee-o-meter -p 5432:5432 -e POSTGRES_PASSWORD=mypassword -e POSTGRES_USER=postgres -d postgres",
+    "db:docker-run:local": "docker start coffee-o-meter"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.6.1"
+  },
+  "devDependencies": {
+    "prisma": "^4.6.1"
+  },
+  "main": "./index.ts",
+  "types": "./index.ts"
+}

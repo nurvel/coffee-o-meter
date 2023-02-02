@@ -1,0 +1,30 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local", ".env"],
+  "globalEnv": ["NODE_ENV"],
+  "pipeline": {
+    "build": {
+      "outputs": ["dist/**", ".next/**"],
+      "dependsOn": ["^build", "^api:generate", "^db:generate", "^db:migrate"]
+    },
+    "dev": {
+      "dependsOn": [
+        "^api:generate",
+        "^db:docker-run:local",
+        "^db:generate",
+        "^db:migrate:local"
+      ],
+      "persistent": true
+    },
+    "api:generate": {},
+    "db:docker-run:local": {
+      "dependsOn": ["^db:docker-init:local"]
+    },
+    "db:docker-init:local": {},
+    "db:migrate:local": {},
+    "db:generate": {
+      "dependsOn": ["^db:generate"]
+    },
+    "lint": {}
+  }
+}

@@ -11,6 +11,7 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  transpilePackages: ["api"],
   async headers() {
     return [
       {
