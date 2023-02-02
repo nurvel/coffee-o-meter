@@ -10,8 +10,8 @@ const nextConfig = {
     // your project has type errors.
     // !! WARN !!
     ignoreBuildErrors: true,
-    transpilePackages: ['api']
   },
+  transpilePackages: ["api"],
   async headers() {
     return [
       {
