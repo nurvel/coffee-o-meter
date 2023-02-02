@@ -1,0 +1,15 @@
+{
+  "name": "api",
+  "private": true,
+  "scripts": {
+    "api:generate": "openapi --input ./coffee-o-meter-openapi.yaml --output ./generated --name BrewService"
+  },
+  "dependencies": {
+    "typescript": "^4.9.3"
+  },
+  "devDependencies": {
+    "openapi-typescript-codegen": "^0.23.0"
+  },
+  "main": "./generated/index.ts",
+  "types": "./generated/index.ts"
+}

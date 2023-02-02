@@ -8,14 +8,14 @@
     },
     "dev": {
       "dependsOn": [
-        "^generate",
+        "^api:generate",
         "^db:docker-run:local",
         "^db:generate",
         "^db:migrate:local"
       ],
       "persistent": true
     },
-    "generate": {},
+    "api:generate": {},
     "db:docker-run:local": {
       "dependsOn": ["^db:docker-init:local"]
     },
