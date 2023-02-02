@@ -4,7 +4,8 @@
   "globalEnv": ["NODE_ENV"],
   "pipeline": {
     "build": {
-      "outputs": ["dist/**", ".next/**"]
+      "outputs": ["dist/**", ".next/**"],
+      "dependsOn": ["^build", "^api:generate", "^db:generate", "^db:migrate"]
     },
     "dev": {
       "dependsOn": [
