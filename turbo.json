@@ -3,6 +3,7 @@
   "globalDependencies": ["**/.env.*local", ".env"],
   "globalEnv": ["NODE_ENV"],
   "pipeline": {
+    "init": {},
     "build": {
       "outputs": ["dist/**", ".next/**"],
       "dependsOn": ["^build", "^api:generate", "^db:generate", "^db:migrate"]
@@ -10,8 +11,8 @@
     "dev": {
       "dependsOn": [
         "^api:generate",
-        "^db:docker-run:local",
         "^db:generate",
+        "^db:docker-run:local",
         "^db:migrate:local"
       ],
       "persistent": true

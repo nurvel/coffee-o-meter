@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
+    "init": "turbo run db:docker-init:local",
     "dev": "dotenv -e .env.local -- turbo run dev"
   },
   "dependencies": {

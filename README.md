@@ -19,6 +19,7 @@ Init & run local environment
 
 ```
 npm install             # install dependencies
+npm run init            # initialize db
 npm run dev             # code gen & run in local in port 3000
 ```
 
