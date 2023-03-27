@@ -5,7 +5,7 @@
     "api:generate": "openapi --input ./coffee-o-meter-openapi.yaml --output ./generated --name BrewService"
   },
   "dependencies": {
-    "typescript": "^4.9.3"
+    "typescript": "^5.0.2"
   },
   "devDependencies": {
     "openapi-typescript-codegen": "^0.23.0"

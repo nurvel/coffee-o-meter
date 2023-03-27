@@ -9,10 +9,10 @@
     "db:docker-run:local": "docker start coffee-o-meter"
   },
   "dependencies": {
-    "@prisma/client": "^4.6.1"
+    "@prisma/client": "^4.11.0"
   },
   "devDependencies": {
-    "prisma": "^4.6.1"
+    "prisma": "^4.11.0"
   },
   "main": "./index.ts",
   "types": "./index.ts"
